@@ -1,0 +1,10 @@
+TRC 2023-10-17 13:52:23.876+00:00 Got wantList for peer                      topics="codex blockexcengine" tid=1 peer=16U*JMNiva items=1 count=1
+TRC 2023-10-17 13:52:23.876+00:00 Retrieving peer from peer context store    topics="codex peerctxstore" tid=1 peer=16U*JMNiva count=2
+TRC 2023-10-17 13:52:23.876+00:00 Processing new want list entry             topics="codex blockexcengine" tid=1 cid=zb2*3CyMa3 peer=16U*JMNiva wantType=WantBlock count=3
+TRC 2023-10-17 13:52:23.876+00:00 Added entry to peer's want blocks list     topics="codex blockexcengine" tid=1 cid=zb2*3CyMa3 peer=16U*JMNiva wantType=WantBlock count=4
+TRC 2023-10-17 13:52:23.876+00:00 Scheduling a task for this peer, to look over their want-list topics="codex blockexcengine" tid=1 peer=16U*JMNiva count=5
+TRC 2023-10-17 13:52:23.879+00:00 Got new task from queue                    topics="codex blockexcengine" tid=1 peerId=16U*JMNiva count=6
+TRC 2023-10-17 13:52:23.879+00:00 Handling task for peer                     topics="codex blockexcengine" tid=1 peer=16U*JMNiva count=7
+TRC 2023-10-17 13:52:23.880+00:00 wantsBlocks                                topics="codex blockexcengine" tid=1 peer=16U*JMNiva n=3850 count=8
+TRC 2023-10-17 13:52:23.880+00:00 Got peer want blocks list                  topics="codex blockexcengine" tid=1 items=3850 count=9
+TRC 2023-10-17 13:52:23.950+00:00 Got block for cid                          topics="codex repostore" tid=1 cid=zb2*3CyMa3 count=10
