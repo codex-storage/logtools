@@ -17,3 +17,8 @@ def test_raw_parser_should_parse_logline_from_string():
     assert line.message == 'Sending want list to peer'
     assert line.topics == 'topics="codex blockexcnetwork" tid=1 peer=16U*7mogoM type=WantBlock items=1'
     assert line.count == 870781
+
+
+def test_raw_parser_should_return_none_if_line_is_not_parseable():
+    line = parse_raw('This is not a log line', parse_datetime=True)
+    assert line is None

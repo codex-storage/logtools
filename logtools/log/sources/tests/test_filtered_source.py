@@ -1,6 +1,5 @@
 from dateutil import parser
 
-from logtools.log.log_line import LogLine
 from logtools.log.sources.filtered_source import FilteredSource, timestamp_range
 from logtools.log.sources.log_parsers import parse_raw
 from logtools.log.sources.tests.string_log_source import StringLogSource

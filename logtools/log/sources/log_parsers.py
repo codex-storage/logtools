@@ -30,8 +30,11 @@ TOPICS = re.compile(r'((\w+=("[\w\s]+"|\S+) )+)?\w+=("[\w\s]+"|\S+)$')
 
 def parse_raw(line: str, parse_datetime: bool = True) -> Optional[TrackedLogLine[LineNumberLocation]]:
     parsed = LOG_LINE.search(line)
+    if not parsed:
+        return None
+
     topics = TOPICS.search(parsed['message'])
-    if not parsed or not topics:
+    if not topics:
         return None
 
     return TrackedLogLine(
@@ -60,7 +63,7 @@ def raw_parser(stream: TextIO, parse_datetime=True) -> LogSource:
 def csv_parser(stream: TextIO, parse_datetime=True) -> LogSource:
     for line_number, line in enumerate(DictReader(stream), start=1):
         try:
-            line = TrackedLogLine(
+            parsed_line: TrackedLogLine = TrackedLogLine(
                 raw=line['message'],  # FIXME this is NOT the raw line...
                 timestamp=line['timestamp'],
                 message=line['message'],
@@ -70,7 +73,7 @@ def csv_parser(stream: TextIO, parse_datetime=True) -> LogSource:
             )
 
             if parse_datetime:
-                line.timestamp = tsparser.parse(cast(str, line.timestamp))
-            yield line
+                parsed_line.timestamp = tsparser.parse(cast(str, parsed_line.timestamp))
+            yield parsed_line
         except ValueError:
             print(f'Skip unparseable line: {line}', file=sys.stderr)

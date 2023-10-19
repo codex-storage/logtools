@@ -10,8 +10,8 @@ for line in sys.stdin:
 
     if uploading:
         line = line.strip()
-        line = line.rsplit(' ', maxsplit=1)
-        line = ' '.join([line[0], f'upload={upload_no}', line[1]])
+        parts = line.rsplit(' ', maxsplit=1)
+        line = ' '.join([parts[0], f'upload={upload_no}', parts[1]])
         print(line)
 
     if 'Uploaded file' in line:
