@@ -1,9 +1,8 @@
 """Parses a log stream, possibly pre-filtered and/or merged, into a CSV file. Allows chronicles topics to be
 extracted into their own columns."""
 import sys
+from argparse import ArgumentParser
 from csv import DictWriter
-
-from traitlets.config.loader import ArgumentParser
 
 from logtools.log.sources.stream_log_source import StreamLogSource
 
