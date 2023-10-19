@@ -1,22 +1,19 @@
 from dataclasses import dataclass
+from io import StringIO
 
-from logtools.log.sources.log_source import LogSource, TrackedLogLine
+from logtools.log.sources.log_parsers import LogParser
+from logtools.log.sources.stream_log_source import StreamLogSource, LineNumberLocation, raw_parser
 
 
 @dataclass
-class ParseLocation:
+class ParseLocation(LineNumberLocation):
     name: str
-    number: int
 
 
-class StringLogSource(LogSource[TrackedLogLine[ParseLocation]]):
-    def __init__(self, name: str, lines: str):
+class StringLogSource(StreamLogSource):
+    def __init__(self, name: str, lines: str, log_format: LogParser = raw_parser):
         self.name = name
-        self.lines = lines
+        super().__init__(stream=StringIO(lines), log_format=log_format)
 
-    def __iter__(self):
-        for line_number, line in enumerate(self.lines.splitlines(), start=1):
-            parsed = TrackedLogLine.from_str(line, parse_datetime=True)
-            parsed.location = ParseLocation(self.name, line_number)
-
-            yield parsed
+    def _location(self, line_number: int) -> LineNumberLocation:
+        return ParseLocation(name=self.name, line_number=line_number)

@@ -17,6 +17,6 @@ class FilteredSource(LogSource[TrackedLogLine[TLocation]]):
 
 def timestamp_range(start: datetime, end: datetime):
     def predicate(line: TrackedLogLine[TLocation]):
-        return start <= line.timestamp <= end
+        return start <= line.timestamp <= end  # type: ignore
 
     return predicate

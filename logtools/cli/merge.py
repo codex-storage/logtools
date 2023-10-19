@@ -57,8 +57,9 @@ def _assign_colors(names: Dict[str, str]) -> Dict[str, str]:
 def _filtering_predicate(args):
     if args.from_ or args.to:
         return timestamp_range(
-            _ensure_utc(tsparser.parse(args.from_)),
-            _ensure_utc(tsparser.parse(args.to))
+            _ensure_utc(args.from_) if args.from_ is not None else datetime(
+                year=1980, month=1, day=1, hour=0, minute=0, second=0, tzinfo=pytz.UTC),
+            _ensure_utc(args.to) if args.to is not None else datetime.utcnow().replace(tzinfo=pytz.UTC)
         )
 
     return lambda x: True

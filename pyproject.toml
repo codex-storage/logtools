@@ -25,3 +25,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 log-merge = 'logtools.cli.merge:main'
+log-to-csv = 'logtools.cli.to_csv:main'

@@ -2,3 +2,8 @@
 data
 dist
 **/__pycache__
+.Rproj.user
+.RData
+*.html
+*.log
+*.csv

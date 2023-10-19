@@ -22,7 +22,7 @@ def test_should_collate_lines_from_log_sources():
     )
 
     collated = CollatingSource(log1, log2)
-    entries = [(line.location.name, line.location.number, line.count) for line in collated]
+    entries = [(line.location.name, line.location.line_number, line.count) for line in collated]
     assert entries == [
         ('log1', 1, 1),
         ('log1', 2, 2),

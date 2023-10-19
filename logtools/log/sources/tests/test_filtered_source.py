@@ -2,6 +2,7 @@ from dateutil import parser
 
 from logtools.log.log_line import LogLine
 from logtools.log.sources.filtered_source import FilteredSource, timestamp_range
+from logtools.log.sources.log_parsers import parse_raw
 from logtools.log.sources.tests.string_log_source import StringLogSource
 
 
@@ -32,7 +33,7 @@ def test_should_generate_correct_datetime_range_predicate():
     matches = timestamp_range(start=parser.parse('2023-10-16 22:29:24.597+00:00'),
                               end=parser.parse('2023-10-18 20:29:25.597+00:00'))
 
-    lines = [LogLine.from_str(line, parse_datetime=True) for line in raw_lines]
+    lines = [parse_raw(line, parse_datetime=True) for line in raw_lines]
     filtered = [line.count for line in lines if matches(line)]
 
     assert filtered == [2, 3]

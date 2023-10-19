@@ -1,30 +1,25 @@
-import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-from logtools.log.sources.log_source import TrackedLogLine, LogSource
+from logtools.log.sources.log_parsers import LineNumberLocation
+from logtools.log.sources.stream_log_source import StreamLogSource
 
 
 @dataclass
-class FileLineLocation:
+class FileLineLocation(LineNumberLocation):
     path: Path
-    line_number: int
 
 
-class FileLogSource(LogSource[TrackedLogLine[FileLineLocation]]):
+class FileLogSource(StreamLogSource):
     def __init__(self, path: Path, parse_datetime=True):
         self.path = path
-        self.parse_datetime = parse_datetime
+        super().__init__(self.path.open(encoding='utf-8'), parse_datetime=parse_datetime)
 
     def __iter__(self):
-        with self.path.open(encoding='utf-8') as f:
-            for line_number, line in enumerate(f, start=1):
-                try:
-                    parsed = TrackedLogLine.from_str(line, parse_datetime=True)
-                    parsed.location = FileLineLocation(self.path, line_number)
+        try:
+            yield from super().__iter__()
+        finally:
+            self.stream.close()
 
-                    yield parsed
-                except ValueError:
-                    # FIXME we should probably relax parsing restrictions and output
-                    #   these too but for now just skip it.
-                    print(f'Skip unparseable line: {line}', file=sys.stderr)
+    def _location(self, line_number: int) -> LineNumberLocation:
+        return FileLineLocation(path=self.path, line_number=line_number)
