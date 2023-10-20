@@ -8,6 +8,8 @@ library(tidyverse)
 library(lubridate)
 ```
 
+# Node Crashing on Upload
+
 ```{r}
 uploads <- read_csv('./codex-continuous-tests-0codex3-5-77bdb95dc7-j7f46_codex3-5-uploads.csv')
 ```
@@ -148,5 +150,59 @@ ggplot(
   geom_line(aes(x = bucket, y = mean_interval), col = 'red', lwd = 2) +
   geom_line(aes(x = bucket, y = p_70), col = 'orange', lwd = 2) + 
   theme_minimal()
+```
+
+
+# Whole-Cluster
+
+```{r}
+cluster_uploads <- read_csv('../data/20/pods/uploads/all_uploads.csv') |> filter(source != 'source')
+```
+
+```{r}
+cluster_upload_durations <- cluster_uploads |> group_by(source, upload) |> arrange(timestamp) |> summarise(duration = as.numeric(timestamp[n()] - timestamp[1]))
+```
+
+```{r fig.width=12}
+ggplot(cluster_upload_durations) + 
+  geom_line(aes(x = upload, y = duration, col = source)) + 
+  theme_minimal() +
+  facet_wrap(. ~ source) +
+  guides(color = FALSE)
+```
+
+```{r}
+cluster_interlog_intervals <- cluster_uploads |> 
+  group_by(source, upload) |> 
+  arrange(timestamp) |> 
+  mutate(log_interval = as.numeric(timestamp - lag(timestamp))) |>
+  ungroup()
+```
+
+```{r fig.width=10}
+cluster_interlog_intervals |>
+  group_by(source, upload) |>
+  summarise(
+    mean_li = mean(log_interval, na.rm=TRUE),
+    median_li = median(log_interval, na.rm=TRUE),
+    max_li = max(log_interval, na.rm=TRUE),
+  ) |>
+  pivot_longer(-c(source, upload)) %>% {
+    ggplot(.) + 
+      geom_line(aes(x = upload, y = value, col = name)) +
+      scale_y_log10() + 
+      theme_minimal() +
+      ylab('interval between log messages (logscale, seconds)') +
+      facet_wrap(. ~ source) 
+  } 
+```
+
+
+```{r}
+ggplot(cluster_interlog_intervals) + 
+  geom_line(aes(x = upload, y = duration, col = source)) + 
+  theme_minimal() +
+  facet_wrap(. ~ source) +
+  guides(color = FALSE)
 ```
 

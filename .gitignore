@@ -4,6 +4,7 @@ dist
 **/__pycache__
 .Rproj.user
 .RData
+.Rhistory
 *.html
 *.log
 *.csv
