@@ -12,7 +12,7 @@ set -e
 namespace=${1}
 runner_log_source=${2}
 
-if [ -z "$namespace" ] || [ -z "$runner_logs" ]; then
+if [ -z "$namespace" ] || [ -z "$runner_log_source" ]; then
   echo "Usage: bin/process_logs.sh <namespace> <runner_logs>"
   exit 1
 fi
@@ -23,7 +23,7 @@ pod_logs="$logs/pods"
 runner_logs="$logs/runner"
 
 mkdir -p "$pod_logs"
-bash bin/pull_pod_logs.sh "$namespace" "$pod_logs"
+bash ./bin/pull-pod-logs.sh "$namespace" "$pod_logs"
 
 mkdir -p "$runner_logs"
-cp "$runner_log_source" "$runner_logs"
+cp "$runner_log_source"/* "$runner_logs/"

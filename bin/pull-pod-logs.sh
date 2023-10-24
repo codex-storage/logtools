@@ -1,10 +1,15 @@
 #!/bin/bash
 
 namespace=${1:-"codex-continuous-tests"}
-output_folder=${2:./}
+output_folder=${2:-./}
 
 # List all pods in the namespace
 pods=$(kubectl get pods -n "$namespace" -o jsonpath='{.items[*].metadata.name}')
+
+if [ -z "$pods" ]; then
+  echo "No pods found in namespace $namespace."
+  exit 1
+fi
 
 for pod in $pods; do
   echo "Fetching logs for $pod..."
