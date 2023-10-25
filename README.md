@@ -3,7 +3,7 @@
 ## Installation
 
 ```sh
-pip install git+https://github.com/gmega/logtools.git
+pip install git+https://github.com/codex-storage/logtools.git
 ```
 
 ## Usage
