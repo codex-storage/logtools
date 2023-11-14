@@ -1,3 +1,4 @@
+import os
 from argparse import ArgumentParser
 from enum import Enum
 from typing import List, Iterable
@@ -64,7 +65,7 @@ def main():
     parser.add_argument(
         '--es-host',
         help='ElasticSearch URL (defaults to http://localhost:9200)',
-        default='http://localhost:9200'
+        default=os.environ.get('ES_HOST', 'http://localhost:9200')
     )
 
     subparsers = parser.add_subparsers(title='Command', required=True)
