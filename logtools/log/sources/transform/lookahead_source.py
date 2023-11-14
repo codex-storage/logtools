@@ -1,6 +1,6 @@
 from typing import Optional, Iterator
 
-from logtools.log.base import LogSource, TLocation, RawLogLine, TLogLine
+from logtools.log.base import LogSource, TLogLine
 
 
 class LookAheadSource(LogSource[TLogLine]):

@@ -1,6 +1,6 @@
+from logtools.log.sources.input.string_log_source import StringLogSource
 from logtools.log.sources.parse.chronicles_raw_source import ChroniclesRawSource
 from logtools.log.sources.transform.collating_source import CollatingSource
-from logtools.log.sources.input.string_log_source import StringLogSource
 
 
 def test_should_collate_lines_from_log_sources():

@@ -1,7 +1,7 @@
+from logtools.log.sources.input.string_log_source import StringLogSource
 from logtools.log.sources.parse.chronicles_raw_source import ChroniclesRawSource
 from logtools.log.sources.transform.merged_source import MergedSource
 from logtools.log.sources.transform.ordered_source import OrderedSource
-from logtools.log.sources.input.string_log_source import StringLogSource
 
 
 def test_should_merge_logs_by_timestamp():

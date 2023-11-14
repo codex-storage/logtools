@@ -1,6 +1,6 @@
+from logtools.log.sources.input.string_log_source import StringLogSource
 from logtools.log.sources.parse.chronicles_raw_source import ChroniclesRawSource
 from logtools.log.sources.transform.lookahead_source import LookAheadSource
-from logtools.log.sources.input.string_log_source import StringLogSource
 
 
 def test_should_allow_peeking_at_the_head_of_log():

@@ -1,8 +1,8 @@
 from dateutil import parser
 
+from logtools.log.sources.input.string_log_source import StringLogSource
 from logtools.log.sources.parse.chronicles_raw_source import ChroniclesRawSource
 from logtools.log.sources.transform.filtered_source import FilteredSource, timestamp_range
-from logtools.log.sources.input.string_log_source import StringLogSource
 
 
 def test_should_filter_by_matching_predicate():
