@@ -45,7 +45,7 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
             for i, document in enumerate(self._run_scan(self._build_query(), index)):
                 yield self._format_log_line(i, index, document)
 
-    def _indices(self) -> List[str]:
+    def _indices(self) -> Iterator[str]:
         # FIXME this is a VERY INEFFICIENT fallback
         if self.start_date is None:
             return [f'{INDEX_PREFIX}-*']
@@ -61,7 +61,7 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
             start_day += increment
 
     def _build_query(self) -> Dict[str, Any]:
-        query = {
+        query: Dict[str, Any] = {
             'sort': [{'@timestamp': 'asc'}]
         }
 
@@ -85,7 +85,8 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
         return query
 
     def _run_scan(self, query: Dict[str, Any], index: str):
-        initial = self.client.search(index=index, body=query, size=5_000, scroll='2m')
+        # the search type stub does not contain the body argument for some reason so we disable typing here.
+        initial = self.client.search(index=index, body=query, size=5_000, scroll='2m')  # type: ignore
         scroll_id = initial['_scroll_id']
         results = initial
 
@@ -106,7 +107,8 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
         contents = document['_source']
 
         return TimestampedLogLine(
-            location=ElasticSearchLocation(index=index, result_number=result_number, run_id=self.run_id,
+            location=ElasticSearchLocation(index=index, result_number=result_number,
+                                           run_id=contents['pod_labels']['runid'],
                                            pod_name=contents['pod_name']),
             timestamp=datetime.fromisoformat(contents['@timestamp']),
             raw=contents['message'],

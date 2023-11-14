@@ -51,9 +51,9 @@ class ElasticSearchLogRepo:
         }
 
         if prefix is not None:
-            query['aggs']['distinct_namespaces']['terms']['include'] = f'{prefix}.*'
+            query['aggs']['distinct_namespaces']['terms']['include'] = f'{prefix}.*'  # type: ignore
 
-        result = self.client.search(index=self.indices, body=query)
+        result = self.client.search(index=self.indices, body=query)  # type: ignore
 
         for namespace in result['aggregations']['distinct_namespaces']['buckets']:
             yield Namespace(
@@ -78,7 +78,7 @@ class ElasticSearchLogRepo:
         }
 
         if prefix is not None:
-            query['aggs']['distinct_pods']['terms']['include'] = f'{prefix}.*'
+            query['aggs']['distinct_pods']['terms']['include'] = f'{prefix}.*'  # type: ignore
 
         if run_id is not None:
             query['query'] = {
@@ -87,7 +87,8 @@ class ElasticSearchLogRepo:
                 }
             }
 
-        for pod in self.client.search(index=self.indices, body=query)['aggregations']['distinct_pods']['buckets']:
+        for pod in self.client.search(index=self.indices,
+                                      body=query)['aggregations']['distinct_pods']['buckets']:  # type: ignore
             assert len(pod['namespace']['buckets']) == 1, 'Pods should only have one namespace'
             assert len(pod['runid']['buckets']) == 1, 'Pods should only have one run_id'
 
@@ -97,4 +98,3 @@ class ElasticSearchLogRepo:
                 run_id=pod['runid']['buckets'][0]['key'],
                 indices=tuple(sorted(index['key'] for index in pod['indices']['buckets']))
             )
-

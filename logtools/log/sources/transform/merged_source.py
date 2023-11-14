@@ -1,19 +1,19 @@
 from heapq import heapify, heappop, heappush
 from typing import Iterator
 
-from logtools.log.base import LogSource, TLogLine
+from logtools.log.base import LogSource, TimestampedLogLine, TLocation
 from logtools.log.sources.transform.ordered_source import OrderedSource
 
 
-class MergedSource(LogSource[TLogLine]):
-    def __init__(self, *sources: OrderedSource[TLogLine]):
+class MergedSource(LogSource[TimestampedLogLine[TLocation]]):
+    def __init__(self, *sources: OrderedSource[TLocation]):
         self.sources = [source for source in sources if source.peek is not None]
         heapify(self.sources)
 
-    def __iter__(self) -> Iterator[TLogLine]:
+    def __iter__(self) -> Iterator[TimestampedLogLine[TLocation]]:
         return self
 
-    def __next__(self) -> TLogLine:
+    def __next__(self) -> TimestampedLogLine[TLocation]:
         if not self.sources:
             raise StopIteration()
 

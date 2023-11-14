@@ -18,10 +18,10 @@ class LineNumberLocation:
 @dataclass
 class RawLogLine(Generic[TLocation]):
     """
-    A :class:`RawLogLine` is a log line that has not been parsed. It contains the raw text of the line and an optional
-    location when that can be meaningfully established by the input source.
+    A :class:`RawLogLine` is a log line that has not been parsed. It contains the raw text of the line and a
+    location, when that can be meaningfully established by the input source.
     """
-    location: Optional[TLocation]
+    location: TLocation
     raw: str
 
 
