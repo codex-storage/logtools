@@ -1,7 +1,9 @@
+import datetime
 import math
 import os
 import textwrap
 from argparse import ArgumentParser
+from datetime import timedelta
 from enum import Enum
 from typing import List, Iterable
 
@@ -77,6 +79,10 @@ def main():
     subparsers = parser.add_subparsers(title='Command', required=True)
 
     get = subparsers.add_parser('get', help='Display existing resources')
+    get.add_argument('--from', type=tsparser.parse,
+                     help='Show resources present in log messages starting at the given date '
+                          '(MM-DD-YYYY, or MM-DD-YYYY HH:MM:SS.mmmmmm). Defaults to 7 days ago.',
+                     default=(datetime.datetime.today() - timedelta(days=7)).date())
     get.set_defaults(main=get_object)
 
     get_subparsers = get.add_subparsers(title='Resource type', dest='resource_type', required=True)

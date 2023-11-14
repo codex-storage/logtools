@@ -3,8 +3,8 @@ from datetime import datetime
 import pytest
 import pytz
 
-from logtools.log.sources.parse.chronicles_raw_source import ChroniclesRawSource, ChroniclesLogLine, LogLevel
 from logtools.log.sources.input.string_log_source import StringLogSource
+from logtools.log.sources.parse.chronicles_raw_source import ChroniclesRawSource, ChroniclesLogLine, LogLevel
 
 
 def test_should_parse_raw_chronicles_logs():

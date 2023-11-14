@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from logtools.log.sources.parse.chronicles_raw_source import ChroniclesRawSource
 from logtools.log.sources.input.file_log_source import FileLogSource
+from logtools.log.sources.parse.chronicles_raw_source import ChroniclesRawSource
 
 SAMPLE_LOG = Path(__file__).parent / 'sample.log'
 

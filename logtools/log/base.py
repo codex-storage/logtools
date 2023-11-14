@@ -1,10 +1,8 @@
 import abc
-import re
 from abc import ABC
 from dataclasses import dataclass
 from datetime import datetime
-from enum import Enum
-from typing import Optional, TypeVar, Generic, Iterable, Iterator
+from typing import TypeVar, Generic, Iterator
 
 TLocation = TypeVar('TLocation')
 

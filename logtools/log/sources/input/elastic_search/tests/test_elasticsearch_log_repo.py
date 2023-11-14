@@ -1,11 +1,12 @@
 import pytest
+from dateutil import parser
 
 from logtools.log.sources.input.elastic_search.elastic_search_log_repo import ElasticSearchLogRepo, Namespace, Pod
 
 
 # XXX these are not good quality tests as they are overly complex and either tightly coupled to specific data or very
-#   weak in terms of what they assert. Ideally we should build simpler fixtures and test smaller bits at a time, but
-#   that requires a lot of setup, so we go with this.
+#   weak in terms of what they assert. They will be a pain to maintain. Ideally we should build simpler fixtures and
+#   test smaller bits at a time, but that requires a lot of setup, so for now we go with this.
 
 @pytest.mark.vcr
 def test_should_retrieve_existing_namespaces():
@@ -22,11 +23,15 @@ def test_should_retrieve_existing_namespaces():
                 '20231109-043100',
                 '20231109-055106',
                 '20231109-085853',
+                '20231114-045924',
+                '20231114-051016',
+                '20231114-051742',
             ),
             indices=(
                 'continuous-tests-pods-2023.11.07',
                 'continuous-tests-pods-2023.11.09',
                 'continuous-tests-pods-2023.11.10',
+                'continuous-tests-pods-2023.11.14',
             ),
         ),
         Namespace(
@@ -60,3 +65,16 @@ def test_should_retrieve_existing_pods_for_namespace():
             'continuous-tests-pods-2023.11.10',
         )
     ) in pods
+
+
+@pytest.mark.vcr
+def test_should_respect_time_horizon_for_retrieving_resources():
+    repo = ElasticSearchLogRepo(since=parser.parse('2023-11-14T18:00:00.000Z'))
+    namespaces = repo.namespaces('codex-continuous-tests-profiling')
+
+    assert len(list(namespaces)) == 0
+
+    repo = ElasticSearchLogRepo(since=parser.parse('2023-11-07T18:00:00.000Z'))
+    namespaces = repo.namespaces('codex-continuous-tests-profiling')
+
+    assert len(list(namespaces)) == 2
