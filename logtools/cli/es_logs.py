@@ -1,3 +1,4 @@
+from argparse import ArgumentParser
 from enum import Enum
 from typing import List, Iterable
 
@@ -5,7 +6,6 @@ from colored import Style
 from dateutil import parser as tsparser
 from elasticsearch import Elasticsearch
 from prettytable import PrettyTable
-from traitlets.config.loader import ArgumentParser
 
 from logtools.cli.palettes import ColorMap
 from logtools.log.sources.input.elastic_search.elastic_search_log_repo import ElasticSearchLogRepo
