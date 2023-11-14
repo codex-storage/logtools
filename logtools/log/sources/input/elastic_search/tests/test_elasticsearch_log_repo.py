@@ -15,27 +15,27 @@ def test_should_retrieve_existing_namespaces():
     assert set(namespaces) == {
         Namespace(
             name='codex-continuous-tests-profiling-two-client-tests-0',
-            run_id=frozenset({
-                '20231109-085853',
+            run_id=(
+                '20231107-064223',
+                '20231107-065930',
                 '20231107-074743',
                 '20231109-043100',
-                '20231107-065930',
-                '20231107-064223',
-                '20231109-055106'
-            }),
-            indices=frozenset({
+                '20231109-055106',
+                '20231109-085853',
+            ),
+            indices=(
                 'continuous-tests-pods-2023.11.07',
                 'continuous-tests-pods-2023.11.09',
                 'continuous-tests-pods-2023.11.10',
-            }),
+            ),
         ),
         Namespace(
             name='codex-continuous-tests-profiling-two-client-tests-sched-0',
-            run_id=frozenset({'20231109-101554'}),
-            indices=frozenset({
+            run_id=('20231109-101554',),
+            indices=(
                 'continuous-tests-pods-2023.11.09',
-                'continuous-tests-pods-2023.11.10'
-            }),
+                'continuous-tests-pods-2023.11.10',
+            ),
         )
     }
 
@@ -55,10 +55,8 @@ def test_should_retrieve_existing_pods_for_namespace():
         name='bootstrap-2-58b69484bc-88msf',
         namespace='codex-continuous-tests-profiling-two-client-tests-sched-0',
         run_id='20231109-101554',
-        indices=frozenset({
+        indices=(
             'continuous-tests-pods-2023.11.09',
-            'continuous-tests-pods-2023.11.10'
-        })
+            'continuous-tests-pods-2023.11.10',
+        )
     ) in pods
-
-

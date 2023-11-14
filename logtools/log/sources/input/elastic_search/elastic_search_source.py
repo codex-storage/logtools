@@ -26,8 +26,8 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
             pods: Optional[Set[str]] = None,
             run_id: Optional[str] = None,
             client: Optional[Elasticsearch] = None,
-            start_date: Optional[datetime] = datetime.min,
-            end_date: Optional[datetime] = datetime.max,
+            start_date: Optional[datetime] = None,
+            end_date: Optional[datetime] = None,
     ):
         if client is None:
             logger.warning('No client provided, defaulting to localhost')
@@ -42,12 +42,16 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
 
     def __iter__(self) -> Iterator[TimestampedLogLine[ElasticSearchLocation]]:
         for index in self._indices():
-            for i, document in enumerate(self._get_logs(index)):
+            for i, document in enumerate(self._run_scan(self._build_query(), index)):
                 yield self._format_log_line(i, index, document)
 
     def _indices(self) -> List[str]:
+        # FIXME this is a VERY INEFFICIENT fallback
+        if self.start_date is None:
+            return [f'{INDEX_PREFIX}-*']
+
         start_day = self.start_date.date()
-        end_day = self.end_date.date()
+        end_day = self.end_date.date() if self.end_date else datetime.now().date()
         increment = timedelta(days=1)
 
         while start_day <= end_day:
@@ -56,24 +60,18 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
                 yield index
             start_day += increment
 
-    def _get_logs(self, index: str):
+    def _build_query(self) -> Dict[str, Any]:
         query = {
-            'sort': [{'@timestamp': 'asc'}],
-            'query': {
-                'bool': {
-                    'filter': [
-                        {
-                            'range': {
-                                '@timestamp': {
-                                    'gte': self.start_date.isoformat(),
-                                    'lte': self.end_date.isoformat(),
-                                }
-                            }
-                        }
-                    ]
-                }
-            }
+            'sort': [{'@timestamp': 'asc'}]
         }
+
+        if self.start_date is not None or self.end_date is not None:
+            time_range = {}
+            if self.start_date is not None:
+                time_range['gte'] = self.start_date.isoformat()
+            if self.end_date is not None:
+                time_range['lte'] = self.end_date.isoformat()
+            query['query'] = {'bool': {'filter': [{'range': {'@timestamp': time_range}}]}}
 
         if self.pods is not None:
             query['query']['bool']['filter'].append({"terms": {"pod_name.keyword": list(self.pods)}})
@@ -81,7 +79,10 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
         if self.run_id is not None:
             query['query']['bool']['filter'].append({"term": {"pod_labels.runid.keyword": self.run_id}})
 
-        return self._run_scan(query, index)
+        if 'query' not in query:
+            query['query'] = {'match_all': {}}
+
+        return query
 
     def _run_scan(self, query: Dict[str, Any], index: str):
         initial = self.client.search(index=index, body=query, size=5_000, scroll='2m')

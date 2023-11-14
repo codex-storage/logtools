@@ -11,8 +11,8 @@ logger = logging.getLogger(__name__)
 @dataclass(frozen=True)
 class Namespace:
     name: str
-    run_id: frozenset[str]
-    indices: frozenset[str]
+    run_id: tuple[str, ...]
+    indices: tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -20,7 +20,7 @@ class Pod:
     name: str
     namespace: str
     run_id: str
-    indices: frozenset[str]
+    indices: tuple[str, ...]
 
 
 class ElasticSearchLogRepo:
@@ -58,8 +58,8 @@ class ElasticSearchLogRepo:
         for namespace in result['aggregations']['distinct_namespaces']['buckets']:
             yield Namespace(
                 name=namespace['key'],
-                run_id=frozenset(run_id['key'] for run_id in namespace['runid']['buckets']),
-                indices=frozenset(index['key'] for index in namespace['indices']['buckets'])
+                run_id=tuple(sorted(run_id['key'] for run_id in namespace['runid']['buckets'])),
+                indices=tuple(sorted(index['key'] for index in namespace['indices']['buckets']))
             )
 
     def pods(self, prefix: Optional[str] = None, run_id: Optional[str] = None):
@@ -95,5 +95,6 @@ class ElasticSearchLogRepo:
                 name=pod['key'],
                 namespace=pod['namespace']['buckets'][0]['key'],
                 run_id=pod['runid']['buckets'][0]['key'],
-                indices=frozenset(index['key'] for index in pod['indices']['buckets'])
+                indices=tuple(sorted(index['key'] for index in pod['indices']['buckets']))
             )
+
