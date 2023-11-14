@@ -1,4 +1,6 @@
+import math
 import os
+import textwrap
 from argparse import ArgumentParser
 from enum import Enum
 from typing import List, Iterable
@@ -26,11 +28,15 @@ GETTERS = {
 
 def format_table(objects: List) -> str:
     tbl = PrettyTable()
+    wrapper = None
 
     for obj in objects:
         if not tbl.field_names:
             tbl.field_names = obj.__annotations__.keys()
-        tbl.add_row([_format_field(getattr(obj, field)) for field in tbl.field_names])
+            wrapper = textwrap.TextWrapper(width=math.ceil(os.get_terminal_size().columns / len(tbl.field_names)),
+                                           break_long_words=False)
+
+        tbl.add_row([wrapper.fill(_format_field(getattr(obj, field))) for field in tbl.field_names])
 
     return tbl.get_string()
 
