@@ -3,9 +3,11 @@ extracted into their own columns."""
 import sys
 from argparse import ArgumentParser
 from csv import DictWriter
+from pathlib import Path
 
 from logtools.cli.utils import kv_pair
-from logtools.log.sources.stream_log_source import StreamLogSource
+from logtools.log.sources.input.file_log_source import FileLogSource
+from logtools.log.sources.parse.chronicles_raw_source import ChroniclesRawSource
 
 
 def to_csv(args):
@@ -18,7 +20,8 @@ def to_csv(args):
     )
 
     writer.writeheader()
-    for line in StreamLogSource(sys.stdin):
+    # FIXME '/dev/stdin' is a non-portable hack.
+    for line in ChroniclesRawSource(FileLogSource(Path('/dev/stdin'))):
         line_fields = {field: line.fields.get(field, 'NA') for field in fields}
         writer.writerow({
             'timestamp': line.timestamp.isoformat(),

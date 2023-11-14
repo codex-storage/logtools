@@ -1,0 +1,30 @@
+interactions:
+- request:
+    body: '{"aggs":{"distinct_namespaces":{"terms":{"field":"pod_namespace.keyword","include":"codex-continuous-tests-profiling.*"},"aggs":{"indices":{"terms":{"field":"_index"}},"runid":{"terms":{"field":"pod_labels.runid.keyword"}}}}},"size":0}'
+    headers:
+      accept:
+      - application/vnd.elasticsearch+json; compatible-with=8
+      connection:
+      - keep-alive
+      content-type:
+      - application/vnd.elasticsearch+json; compatible-with=8
+      user-agent:
+      - elasticsearch-py/8.10.1 (Python/3.11.5; elastic-transport/8.10.0)
+      x-elastic-client-meta:
+      - es=8.10.1,py=3.11.5,t=8.10.0,ur=2.0.7
+    method: POST
+    uri: http://localhost:9200/continuous-tests-pods-*/_search
+  response:
+    body:
+      string: '{"took":24,"timed_out":false,"_shards":{"total":14,"successful":14,"skipped":0,"failed":0},"hits":{"total":{"value":10000,"relation":"gte"},"max_score":null,"hits":[]},"aggregations":{"distinct_namespaces":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"codex-continuous-tests-profiling-two-client-tests-0","doc_count":32258774,"indices":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"continuous-tests-pods-2023.11.10","doc_count":23279858},{"key":"continuous-tests-pods-2023.11.09","doc_count":8405729},{"key":"continuous-tests-pods-2023.11.07","doc_count":573187}]},"runid":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"20231109-085853","doc_count":31604533},{"key":"20231107-074743","doc_count":517515},{"key":"20231109-043100","doc_count":77259},{"key":"20231107-065930","doc_count":50350},{"key":"20231107-064223","doc_count":5322},{"key":"20231109-055106","doc_count":3795}]}},{"key":"codex-continuous-tests-profiling-two-client-tests-sched-0","doc_count":22615739,"indices":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"continuous-tests-pods-2023.11.10","doc_count":22415082},{"key":"continuous-tests-pods-2023.11.09","doc_count":200657}]},"runid":{"doc_count_error_upper_bound":0,"sum_other_doc_count":0,"buckets":[{"key":"20231109-101554","doc_count":22615739}]}}]}}}'
+    headers:
+      Transfer-Encoding:
+      - chunked
+      X-elastic-product:
+      - Elasticsearch
+      content-type:
+      - application/vnd.elasticsearch+json;compatible-with=8
+    status:
+      code: 200
+      message: OK
+version: 1

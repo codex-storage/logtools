@@ -10,10 +10,11 @@ import pytz
 from colored import Fore, Style
 from dateutil import parser as tsparser
 
-from logtools.log.sources.file_log_source import FileLogSource
-from logtools.log.sources.filtered_source import FilteredSource, timestamp_range
-from logtools.log.sources.merged_source import MergedSource
-from logtools.log.sources.ordered_source import OrderedSource
+from logtools.log.sources.input.file_log_source import FileLogSource
+from logtools.log.sources.parse.chronicles_raw_source import ChroniclesRawSource
+from logtools.log.sources.transform.filtered_source import FilteredSource, timestamp_range
+from logtools.log.sources.transform.merged_source import MergedSource
+from logtools.log.sources.transform.ordered_source import OrderedSource
 
 
 def merge(args):
@@ -23,7 +24,9 @@ def merge(args):
     logs = MergedSource(*[
         OrderedSource(
             FilteredSource(
-                FileLogSource(path),
+                ChroniclesRawSource(
+                    FileLogSource(path)
+                ),
                 predicate=_filtering_predicate(args)
             )
         )
@@ -73,7 +76,7 @@ def _ensure_utc(ts: datetime) -> datetime:
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Merges logs chronologically and outputs colored, interleaved content.')
+        description='Merges Chronicles logs chronologically and outputs colored, interleaved content.')
 
     parser.add_argument("files", nargs="+", help='Log files to merge.', type=Path)
     parser.add_argument('--aliases', nargs="*",
@@ -85,3 +88,7 @@ def main():
                         help='Show entries to date/time (multiple formats accepted)')
 
     merge(parser.parse_args())
+
+
+if __name__ == '__main__':
+    main()
