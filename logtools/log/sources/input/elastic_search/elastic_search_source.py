@@ -6,6 +6,7 @@ from typing import Optional, Dict, Any, Iterator, Set
 from elasticsearch import Elasticsearch
 
 from logtools.log.base import TimestampedLogLine, LogSource
+from logtools.log.utils import tree
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +49,8 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
     def _indices(self) -> Iterator[str]:
         # FIXME this is a VERY INEFFICIENT fallback
         if self.start_date is None:
-            return [f'{INDEX_PREFIX}-*']
+            yield f'{INDEX_PREFIX}-*'
+            return
 
         start_day = self.start_date.date()
         end_day = self.end_date.date() if self.end_date else datetime.now().date()
@@ -61,9 +63,8 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
             start_day += increment
 
     def _build_query(self) -> Dict[str, Any]:
-        query: Dict[str, Any] = {
-            'sort': [{'@timestamp': 'asc'}]
-        }
+        query = tree()
+        query['sort'] = [{'@timestamp': 'asc'}]
 
         if self.start_date is not None or self.end_date is not None:
             time_range = {}
@@ -74,10 +75,12 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
             query['query'] = {'bool': {'filter': [{'range': {'@timestamp': time_range}}]}}
 
         if self.pods is not None:
-            query['query']['bool']['filter'].append({"terms": {"pod_name.keyword": list(self.pods)}})
+            filters = query['query']['bool'].setdefault('filter', [])
+            filters.append({"terms": {"pod_name.keyword": list(self.pods)}})
 
         if self.run_id is not None:
-            query['query']['bool']['filter'].append({"term": {"pod_labels.runid.keyword": self.run_id}})
+            filters = query['query']['bool'].setdefault('filter', [])
+            filters.append({"term": {"pod_labels.runid.keyword": self.run_id}})
 
         if 'query' not in query:
             query['query'] = {'match_all': {}}

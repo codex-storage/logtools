@@ -27,3 +27,15 @@ def test_should_fetch_logs_by_date():
 
     assert {line.location.pod_name for line in lines} == {'codex1-3-b558568cf-tvcsc', 'bootstrap-2-58b69484bc-88msf'}
     assert {line.location.run_id for line in lines} == {'20231109-101554'}
+
+@pytest.mark.vcr
+def test_should_fetch_logs_when_no_dates_are_specified():
+    log = ElasticSearchSource(
+        run_id='20231109-101554',
+        pods={'codex1-3-b558568cf-tvcsc'}
+    )
+
+    try:
+        next(log.__iter__())
+    except StopIteration:
+        assert False, "Should have returned at least one log line"
