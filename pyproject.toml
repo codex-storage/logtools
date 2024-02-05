@@ -6,7 +6,7 @@ authors = ["gmega <giuliano@status.im>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "~3.11"
+python = ">=3.11,<3.12"
 pytz = "^2023.3.post1"
 colored = "^2.2.3"
 python-dateutil = "^2.8.2"
