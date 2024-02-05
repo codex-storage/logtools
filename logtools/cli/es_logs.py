@@ -5,7 +5,7 @@ import textwrap
 from argparse import ArgumentParser
 from datetime import timedelta
 from enum import Enum
-from typing import List, Iterable
+from typing import List, Iterable, cast
 
 from colored import Style
 from dateutil import parser as tsparser
@@ -38,7 +38,8 @@ def format_table(objects: List) -> str:
             wrapper = textwrap.TextWrapper(width=math.ceil(os.get_terminal_size().columns / len(tbl.field_names)),
                                            break_long_words=False)
 
-        tbl.add_row([wrapper.fill(_format_field(getattr(obj, field))) for field in tbl.field_names])
+        tbl.add_row([cast(textwrap.TextWrapper, wrapper).fill(
+            _format_field(getattr(obj, field))) for field in tbl.field_names])
 
     return tbl.get_string()
 

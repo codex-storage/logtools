@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "logtools"
-version = "1.0.1"
+version = "1.1.0"
 description = ""
 authors = ["gmega <giuliano@status.im>"]
 readme = "README.md"
@@ -12,6 +12,7 @@ colored = "^2.2.3"
 python-dateutil = "^2.8.2"
 elasticsearch = "^8.10.1"
 prettytable = "^3.9.0"
+fastapi = "^0.109.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.2"

@@ -21,7 +21,7 @@ def merge(args):
     names = _assign_aliases(args)
     palette = _assign_colors(names)
 
-    logs = MergedSource(*[
+    parts = [
         OrderedSource(
             FilteredSource(
                 ChroniclesRawSource(
@@ -31,7 +31,10 @@ def merge(args):
             )
         )
         for path in args.files
-    ])
+    ]
+
+    # If we only have one source, then no need to actually do a merge.
+    logs = MergedSource(*parts) if len(parts) > 1 else parts[0]
 
     for line in logs:
         log_id = names[line.location.path.name]

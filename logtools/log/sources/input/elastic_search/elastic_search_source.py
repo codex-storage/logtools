@@ -76,11 +76,11 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
 
         if self.pods is not None:
             filters = query['query']['bool'].setdefault('filter', [])
-            filters.append({"terms": {"pod_name.keyword": list(self.pods)}})
+            filters.append({"terms": {"pod_name.keyword": list(self.pods)}})  # type: ignore
 
         if self.run_id is not None:
             filters = query['query']['bool'].setdefault('filter', [])
-            filters.append({"term": {"pod_labels.runid.keyword": self.run_id}})
+            filters.append({"term": {"pod_labels.runid.keyword": self.run_id}})  # type: ignore
 
         if 'query' not in query:
             query['query'] = {'match_all': {}}
