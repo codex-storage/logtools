@@ -14,9 +14,9 @@ _LOG_LINE = re.compile(
     r'count=(?P<count>\d+)$'
 )
 
-_TOPICS = re.compile(r'((\w+=("[^"]+"|\S+) )+)?\w+=("[^"]+"|\S+)$')
+_TOPICS = re.compile(r'((\w+=("[^"]+"|\S+) )+)?\w+=("([^"\\]|\\")+"|\S+)$')
 
-_TOPICS_KV = re.compile(r'(?P<key>\w+)=(?P<value>"[^"]+"|\S+)')
+_TOPICS_KV = re.compile(r'(?P<key>\w+)=(?P<value>"(?:[^"\\]|\\")+"|\S+)')
 
 
 class LogLevel(Enum):

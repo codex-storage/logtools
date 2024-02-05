@@ -52,7 +52,7 @@ def test_should_parse_chronicles_fields():
     }
 
 
-def test_should_parse_topics_with_non_alphanumeric_characters():
+def test_should_parse_topics_with_non_alphanumeric_character_values():
     source = ChroniclesRawSource(
         StringLogSource(
             lines='WRN 2024-02-02 20:38:47.316+00:00 a message topics="codex pendingblocks" address="cid: zDx*QP4zx9" '
@@ -67,4 +67,22 @@ def test_should_parse_topics_with_non_alphanumeric_characters():
     assert line.fields == {
         'topics': '"codex pendingblocks"',
         'address': '"cid: zDx*QP4zx9"',
+    }
+
+
+def test_should_parse_topics_with_escaped_quotes_in_values():
+    source = ChroniclesRawSource(
+        StringLogSource(
+            lines='WRN 2024-02-02 20:38:47.316+00:00 a message topics="codex pendingblocks" '
+                  'address="cid: \\"zDx*QP4zx9\\"" count=10641'
+        )
+    ).__iter__()
+
+    line = next(source)
+
+    assert line.message == "a message"
+    assert line.count == 10641
+    assert line.fields == {
+        'topics': '"codex pendingblocks"',
+        'address': '"cid: \\"zDx*QP4zx9\\""',
     }

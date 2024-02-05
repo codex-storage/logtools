@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "logtools"
-version = "1.1.1"
+version = "1.1.2"
 description = ""
 authors = ["gmega <giuliano@status.im>"]
 readme = "README.md"
