@@ -86,3 +86,21 @@ def test_should_parse_topics_with_escaped_quotes_in_values():
         'topics': '"codex pendingblocks"',
         'address': '"cid: \\"zDx*QP4zx9\\""',
     }
+
+
+def test_should_parse_topics_with_escaped_quotes_and_backlashes_in_value():
+    source = ChroniclesRawSource(
+        StringLogSource(
+            lines='TRC 2024-02-02 20:37:18.316+00:00 Starting codex node     topics="codex node" '
+                  'config="some \\"quoted\\" string with \'more\' escape chars" count=7'
+        )
+    ).__iter__()
+
+    line = next(source)
+
+    assert line.message == "Starting codex node"
+    assert line.count == 7
+    assert line.fields == {
+        'topics': '"codex node"',
+        'config': '"some \\"quoted\\" string with \'more\' escape chars"',
+    }
