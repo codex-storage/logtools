@@ -7,15 +7,15 @@ from logtools.log.sources.input.string_log_source import StringLogSource
 from logtools.log.sources.parse.chronicles_raw_source import ChroniclesRawSource, ChroniclesLogLine, LogLevel
 
 
-def test_should_parse_raw_chronicles_logs():
-    source = ChroniclesRawSource(
-        StringLogSource(
-            lines='TRC 2023-10-16 17:28:46.579+00:00 Sending want list to peer                  '
-                  'topics="codex blockexcnetwork" tid=1 peer=16U*7mogoM type=WantBlock items=1 count=870781'
-        )
-    ).__iter__()
+def parse_single_line(lines: str):
+    return next(ChroniclesRawSource(StringLogSource(lines)).__iter__())
 
-    line = next(source)
+
+def test_should_parse_raw_chronicles_logs():
+    line = parse_single_line(
+        'TRC 2023-10-16 17:28:46.579+00:00 Sending want list to peer                  '
+        'topics="codex blockexcnetwork" tid=1 peer=16U*7mogoM type=WantBlock items=1 count=870781'
+    )
 
     assert line.level == LogLevel.trace
     assert line.timestamp == datetime(2023, 10, 16, 17, 28, 46,
@@ -53,14 +53,10 @@ def test_should_parse_chronicles_fields():
 
 
 def test_should_parse_topics_with_non_alphanumeric_character_values():
-    source = ChroniclesRawSource(
-        StringLogSource(
-            lines='WRN 2024-02-02 20:38:47.316+00:00 a message topics="codex pendingblocks" address="cid: zDx*QP4zx9" '
-                  'count=10641'
-        )
-    ).__iter__()
-
-    line = next(source)
+    line = parse_single_line(
+        'WRN 2024-02-02 20:38:47.316+00:00 a message topics="codex pendingblocks" address="cid: zDx*QP4zx9" '
+        'count=10641'
+    )
 
     assert line.message == "a message"
     assert line.count == 10641
@@ -71,14 +67,10 @@ def test_should_parse_topics_with_non_alphanumeric_character_values():
 
 
 def test_should_parse_topics_with_escaped_quotes_in_values():
-    source = ChroniclesRawSource(
-        StringLogSource(
-            lines='WRN 2024-02-02 20:38:47.316+00:00 a message topics="codex pendingblocks" '
-                  'address="cid: \\"zDx*QP4zx9\\"" count=10641'
-        )
-    ).__iter__()
-
-    line = next(source)
+    line = parse_single_line(
+        'WRN 2024-02-02 20:38:47.316+00:00 a message topics="codex pendingblocks" '
+        'address="cid: \\"zDx*QP4zx9\\"" count=10641'
+    )
 
     assert line.message == "a message"
     assert line.count == 10641
@@ -89,14 +81,10 @@ def test_should_parse_topics_with_escaped_quotes_in_values():
 
 
 def test_should_parse_topics_with_escaped_quotes_and_backlashes_in_value():
-    source = ChroniclesRawSource(
-        StringLogSource(
-            lines='TRC 2024-02-02 20:37:18.316+00:00 Starting codex node     topics="codex node" '
-                  'config="some \\"quoted\\" string with \'more\' escape chars" count=7'
-        )
-    ).__iter__()
-
-    line = next(source)
+    line = parse_single_line(
+        'TRC 2024-02-02 20:37:18.316+00:00 Starting codex node     topics="codex node" '
+        'config="some \\"quoted\\" string with \'more\' escape chars" count=7'
+    )
 
     assert line.message == "Starting codex node"
     assert line.count == 7
@@ -104,3 +92,15 @@ def test_should_parse_topics_with_escaped_quotes_and_backlashes_in_value():
         'topics': '"codex node"',
         'config': '"some \\"quoted\\" string with \'more\' escape chars"',
     }
+
+
+def test_should_parse_timestamps_with_negative_time_offsets():
+    line = parse_single_line(
+        'WRN 2024-02-02 20:38:47.316-03:00 a message topics="codex pendingblocks" address="cid: zDx*QP4zx9" '
+        'count=10641'
+    )
+
+    assert line.timestamp == datetime(2024, 2, 2, 20, 38, 47, 316000,
+                                      tzinfo=pytz.FixedOffset(-180))
+    assert line.message == "a message"
+    assert line.count == 10641

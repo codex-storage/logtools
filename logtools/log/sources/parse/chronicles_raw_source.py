@@ -10,7 +10,7 @@ from dateutil import parser
 from logtools.log.base import LogSource, TLocation, RawLogLine, TimestampedLogLine
 
 _LOG_LINE = re.compile(
-    r'(?P<line_type>\w{3}) (?P<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d{3}\+\d{2}:\d{2}) (?P<message>.*) '
+    r'(?P<line_type>\w{3}) (?P<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d{3}[+-]\d{2}:\d{2}) (?P<message>.*) '
     r'count=(?P<count>\d+)$'
 )
 
