@@ -1,8 +1,10 @@
 import logging
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timedelta
+from enum import Enum
 from typing import Optional, Iterator, Dict, Any
 
+from dateutil import parser
 from elasticsearch import Elasticsearch
 
 logger = logging.getLogger(__name__)
@@ -23,14 +25,35 @@ class Pod:
     indices: tuple[str, ...]
 
 
+class TestStatus(Enum):
+    passed = 'passed'
+    failed = 'failed'
+
+
+@dataclass(frozen=True)
+class TestRun:
+    id: str
+    run_id: str
+    test_name: str
+    pods: str
+    start: datetime
+    end: datetime
+    duration: float
+    status: TestStatus
+    error: Optional[str]
+    stacktrace: Optional[str]
+
+
 MAX_AGGREGATION_BUCKETS = 1000
+
+POD_LOGS_INDEX_SET = 'continuous-tests-pods-*'
+TEST_STATUS_INDEX_SET = 'continuous-tests-status-*'
 
 
 class ElasticSearchLogRepo:
     def __init__(
             self,
             client: Optional[Elasticsearch] = None,
-            indices: str = 'continuous-tests-pods-*',
             since: Optional[datetime] = None,
     ):
         if client is None:
@@ -38,7 +61,6 @@ class ElasticSearchLogRepo:
             client = Elasticsearch(hosts='http://localhost:9200', request_timeout=60)
 
         self.client = client
-        self.indices = indices
         self.since = since
 
     def namespaces(self, prefix: Optional[str] = None) -> Iterator[Namespace]:
@@ -58,7 +80,7 @@ class ElasticSearchLogRepo:
         if prefix is not None:
             query['aggs']['distinct_namespaces']['terms']['include'] = f'{prefix}.*'  # type: ignore
 
-        result = self.client.search(index=self.indices, body=query)  # type: ignore
+        result = self.client.search(index=POD_LOGS_INDEX_SET, body=query)  # type: ignore
 
         for namespace in result['aggregations']['distinct_namespaces']['buckets']:
             yield Namespace(
@@ -92,7 +114,7 @@ class ElasticSearchLogRepo:
                 }
             }
 
-        for pod in self.client.search(index=self.indices,
+        for pod in self.client.search(index=POD_LOGS_INDEX_SET,
                                       body=query)['aggregations']['distinct_pods']['buckets']:  # type: ignore
             assert len(pod['namespace']['buckets']) == 1, 'Pods should only have one namespace'
             assert len(pod['runid']['buckets']) == 1, 'Pods should only have one run_id'
@@ -102,6 +124,37 @@ class ElasticSearchLogRepo:
                 namespace=pod['namespace']['buckets'][0]['key'],
                 run_id=pod['runid']['buckets'][0]['key'],
                 indices=tuple(sorted(index['key'] for index in pod['indices']['buckets']))
+            )
+
+    def test_runs(self, run_id: str, failed_only=False) -> Iterator[TestRun]:
+        query = self._time_limited({
+            'query': {
+                'bool': {
+                    'filter': [{'term': {'runid.keyword': run_id}}]
+                }
+            },
+            'sort': [{'@timestamp': 'desc'}],
+            'size': 10000,
+        })
+
+        if failed_only:
+            query['query']['bool']['filter'].append({'term': {'status.keyword': 'Failed'}})
+
+        for document in self.client.search(index=TEST_STATUS_INDEX_SET, body=query)['hits']['hits']:  # type: ignore
+            content = document['_source']
+            start = parser.parse(content['teststart'])
+            duration = float(content['testduration'])
+            yield TestRun(
+                id=document['_id'],
+                run_id=content['runid'],
+                test_name=content['testname'],
+                start=start,
+                end=start + timedelta(seconds=duration),
+                duration=duration,
+                status=TestStatus(content['status'].lower()),
+                pods=content['involvedpods'],
+                error=content.get('error'),
+                stacktrace=content.get('message')
             )
 
     def _time_limited(self, query: Dict[str, Any]) -> Dict[str, Any]:

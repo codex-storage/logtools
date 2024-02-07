@@ -78,3 +78,23 @@ def test_should_respect_time_horizon_for_retrieving_resources():
     namespaces = repo.namespaces('codex-continuous-tests-profiling')
 
     assert len(list(namespaces)) == 2
+
+
+@pytest.mark.vcr
+def test_should_retrieve_test_runs_over_a_single_run_id():
+    repo = ElasticSearchLogRepo()
+    runs = list(repo.test_runs('20240206-093136'))
+
+    assert len(runs) == 14
+
+
+@pytest.mark.vcr
+def test_should_retrieve_failing_test_runs_over_a_single_run_id():
+    repo = ElasticSearchLogRepo()
+    runs = list(repo.test_runs('20240206-093136', failed_only=True))
+
+    assert len(runs) == 1
+    assert runs[0].error.strip() == (
+        "data/zDvZRwzm5UemKDPMvadCu999HrqUnCJGzvKnsF7eiy2XV3TzoW7V/network' timed out after "
+        "3 tries over 10 mins, 1 secs."
+    )
