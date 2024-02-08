@@ -3,7 +3,7 @@ from datetime import timedelta
 import pytest
 from dateutil import parser
 
-from logtools.log.sources.input.elastic_search.elastic_search_source import ElasticSearchSource
+from logtools.log.sources.input.elastic_search_source import ElasticSearchSource
 
 
 @pytest.mark.vcr

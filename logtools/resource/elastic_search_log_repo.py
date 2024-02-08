@@ -1,48 +1,13 @@
 import logging
-from dataclasses import dataclass
 from datetime import datetime, timedelta
-from enum import Enum
 from typing import Optional, Iterator, Dict, Any
 
 from dateutil import parser
 from elasticsearch import Elasticsearch
 
+from logtools.resource.core import Repository, TestRunDescription, TestStatus, TestRun, Namespace, Pod
+
 logger = logging.getLogger(__name__)
-
-
-@dataclass(frozen=True)
-class Namespace:
-    name: str
-    run_id: tuple[str, ...]
-    indices: tuple[str, ...]
-
-
-@dataclass(frozen=True)
-class Pod:
-    name: str
-    namespace: str
-    run_id: str
-    indices: tuple[str, ...]
-
-
-class TestStatus(Enum):
-    passed = 'passed'
-    failed = 'failed'
-
-
-@dataclass(frozen=True)
-class TestRun:
-    id: str
-    run_id: str
-    test_name: str
-    pods: str
-    start: datetime
-    end: datetime
-    duration: float
-    status: TestStatus
-    error: Optional[str]
-    stacktrace: Optional[str]
-
 
 MAX_AGGREGATION_BUCKETS = 1000
 
@@ -50,7 +15,8 @@ POD_LOGS_INDEX_SET = 'continuous-tests-pods-*'
 TEST_STATUS_INDEX_SET = 'continuous-tests-status-*'
 
 
-class ElasticSearchLogRepo:
+class ElasticSearchLogRepo(Repository):
+
     def __init__(
             self,
             client: Optional[Elasticsearch] = None,
@@ -141,21 +107,32 @@ class ElasticSearchLogRepo:
             query['query']['bool']['filter'].append({'term': {'status.keyword': 'Failed'}})
 
         for document in self.client.search(index=TEST_STATUS_INDEX_SET, body=query)['hits']['hits']:  # type: ignore
-            content = document['_source']
-            start = parser.parse(content['teststart'])
-            duration = float(content['testduration'])
-            yield TestRun(
-                id=document['_id'],
-                run_id=content['runid'],
-                test_name=content['testname'],
-                start=start,
-                end=start + timedelta(seconds=duration),
-                duration=duration,
-                status=TestStatus(content['status'].lower()),
-                pods=content['involvedpods'],
-                error=content.get('error'),
-                stacktrace=content.get('message')
-            )
+            yield self._test_run_from_document(document['_index'], document['_id'], document['_source'])
+
+    def describe_test_run(self, test_run_id: str) -> TestRunDescription:
+        index, doc_id = test_run_id.split('/')
+        document = self.client.get(index=index, id=doc_id)
+        source = document['_source']
+        return TestRunDescription(
+            test_run=self._test_run_from_document(document['_index'], document['_id'], source),
+            error=source.get('error'),
+            stacktrace=source.get('message'),
+        )
+
+    @staticmethod
+    def _test_run_from_document(index: str, doc_id: str, source: Dict[str, str]):
+        start = parser.parse(source['teststart'])
+        duration = float(source['testduration'])
+        return TestRun(
+            id=f"{index}/{doc_id}",
+            run_id=source['runid'],
+            test_name=source['testname'],
+            start=start,
+            end=start + timedelta(seconds=duration),
+            duration=duration,
+            status=TestStatus(source['status'].lower()),
+            pods=source['involvedpods'],
+        )
 
     def _time_limited(self, query: Dict[str, Any]) -> Dict[str, Any]:
         if self.since is not None:

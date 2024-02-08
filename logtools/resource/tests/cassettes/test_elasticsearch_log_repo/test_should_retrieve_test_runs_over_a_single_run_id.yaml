@@ -16,7 +16,7 @@ interactions:
     uri: http://localhost:9200/continuous-tests-status-*/_search
   response:
     body:
-      string: '{"took":13,"timed_out":false,"_shards":{"total":23,"successful":23,"skipped":0,"failed":0},"hits":{"total":{"value":14,"relation":"eq"},"max_score":null,"hits":[{"_index":"continuous-tests-status-2024.02.07","_id":"t5apg40BTe2pYqi1l9b8","_score":null,"_ignored":["message.keyword"],"_source":{"@timestamp":"2024-02-06T23:07:39.6615501Z","avgupload":"297.8KB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+      string: '{"took":4,"timed_out":false,"_shards":{"total":24,"successful":24,"skipped":0,"failed":0},"hits":{"total":{"value":14,"relation":"eq"},"max_score":null,"hits":[{"_index":"continuous-tests-status-2024.02.07","_id":"t5apg40BTe2pYqi1l9b8","_score":null,"_ignored":["message.keyword"],"_source":{"@timestamp":"2024-02-06T23:07:39.6615501Z","avgupload":"297.8KB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
         build","codexrevision":"6869475","error":" data/zDvZRwzm5UemKDPMvadCu999HrqUnCJGzvKnsF7eiy2XV3TzoW7V/network''
         timed out after 3 tries over 10 mins, 1 secs.","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpods":"<CODEX24>,<BOOTSTRAP2>","message":"System.Exception:
         System.TimeoutException: Retry ''HTTP-GET-STREAM: data/zDvZRwzm5UemKDPMvadCu999HrqUnCJGzvKnsF7eiy2XV3TzoW7V/network''

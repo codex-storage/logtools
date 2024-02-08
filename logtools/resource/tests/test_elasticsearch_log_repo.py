@@ -1,12 +1,14 @@
 import pytest
 from dateutil import parser
 
-from logtools.log.sources.input.elastic_search.elastic_search_log_repo import ElasticSearchLogRepo, Namespace, Pod
+from logtools.resource.core import Namespace, Pod
+from logtools.resource.elastic_search_log_repo import ElasticSearchLogRepo
 
 
 # XXX these are not good quality tests as they are overly complex and either tightly coupled to specific data or very
 #   weak in terms of what they assert. They will be a pain to maintain. Ideally we should build simpler fixtures and
-#   test smaller bits at a time, but that requires a lot of setup, so for now we go with this.
+#   test smaller bits at a time, but that requires a lot of setup (e.g. having pre-constructed index data in fixtures),
+#   so for now we go with this.
 
 @pytest.mark.vcr
 def test_should_retrieve_existing_namespaces():
@@ -94,7 +96,7 @@ def test_should_retrieve_failing_test_runs_over_a_single_run_id():
     runs = list(repo.test_runs('20240206-093136', failed_only=True))
 
     assert len(runs) == 1
-    assert runs[0].error.strip() == (
+    assert repo.describe_test_run(runs[0].id).error.strip() == (
         "data/zDvZRwzm5UemKDPMvadCu999HrqUnCJGzvKnsF7eiy2XV3TzoW7V/network' timed out after "
         "3 tries over 10 mins, 1 secs."
     )
