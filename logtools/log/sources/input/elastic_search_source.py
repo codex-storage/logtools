@@ -89,7 +89,7 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
 
     def _run_scan(self, query: Dict[str, Any], index: str):
         # the search type stub does not contain the body argument for some reason so we disable typing here.
-        initial = self.client.search(index=index, body=query, size=5_000, scroll='2m')  # type: ignore
+        initial = self.client.search(index=index, body=query, size=10_000, scroll='2m')  # type: ignore
         scroll_id = initial['_scroll_id']
         results = initial
 
