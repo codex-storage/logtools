@@ -5,7 +5,7 @@ from typing import Optional, Iterator, Dict, Any
 from dateutil import parser
 from elasticsearch import Elasticsearch
 
-from logtools.resource.core import Repository, TestRunDescription, TestStatus, TestRun, Namespace, Pod
+from logtools.resource.core import Repository, TestRun, TestStatus, SummarizedTestRun, Namespace, Pod
 
 logger = logging.getLogger(__name__)
 
@@ -92,7 +92,7 @@ class ElasticSearchLogRepo(Repository):
                 indices=tuple(sorted(index['key'] for index in pod['indices']['buckets']))
             )
 
-    def test_runs(self, run_id: str, failed_only=False) -> Iterator[TestRun]:
+    def test_runs(self, run_id: str, failed_only=False) -> Iterator[SummarizedTestRun]:
         query = self._time_limited({
             'query': {
                 'bool': {
@@ -109,21 +109,21 @@ class ElasticSearchLogRepo(Repository):
         for document in self.client.search(index=TEST_STATUS_INDEX_SET, body=query)['hits']['hits']:  # type: ignore
             yield self._test_run_from_document(document['_index'], document['_id'], document['_source'])
 
-    def describe_test_run(self, test_run_id: str) -> TestRunDescription:
+    def test_run(self, test_run_id: str) -> TestRun:
         index, doc_id = test_run_id.split('/')
         document = self.client.get(index=index, id=doc_id)
         source = document['_source']
-        return TestRunDescription(
+        return TestRun(
             test_run=self._test_run_from_document(document['_index'], document['_id'], source),
             error=source.get('error'),
             stacktrace=source.get('message'),
         )
 
     @staticmethod
-    def _test_run_from_document(index: str, doc_id: str, source: Dict[str, str]):
+    def _test_run_from_document(index: str, doc_id: str, source: Dict[str, str]) -> SummarizedTestRun:
         start = parser.parse(source['teststart'])
         duration = float(source['testduration'])
-        return TestRun(
+        return SummarizedTestRun(
             id=f"{index}/{doc_id}",
             run_id=source['runid'],
             test_name=source['testname'],
@@ -131,7 +131,7 @@ class ElasticSearchLogRepo(Repository):
             end=start + timedelta(seconds=duration),
             duration=duration,
             status=TestStatus(source['status'].lower()),
-            pods=source['involvedpods'],
+            pods=source['involvedpodnames'].split(','),
         )
 
     def _time_limited(self, query: Dict[str, Any]) -> Dict[str, Any]:

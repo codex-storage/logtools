@@ -2,7 +2,7 @@ import abc
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
-from typing import Iterator, Optional
+from typing import Iterator, Optional, List
 
 
 @dataclass(frozen=True)
@@ -26,11 +26,11 @@ class TestStatus(Enum):
 
 
 @dataclass(frozen=True)
-class TestRun:
+class SummarizedTestRun:
     id: str
     run_id: str
     test_name: str
-    pods: str
+    pods: List[str]
     start: datetime
     end: datetime
     duration: float
@@ -38,8 +38,8 @@ class TestRun:
 
 
 @dataclass(frozen=True)
-class TestRunDescription:
-    test_run: TestRun
+class TestRun:
+    test_run: SummarizedTestRun
     error: Optional[str]
     stacktrace: Optional[str]
 
@@ -54,9 +54,9 @@ class Repository(abc.ABC):
         ...
 
     @abc.abstractmethod
-    def test_runs(self, run_id: str, failed_only=False) -> Iterator[TestRun]:
+    def test_runs(self, run_id: str, failed_only=False) -> Iterator[SummarizedTestRun]:
         ...
 
     @abc.abstractmethod
-    def describe_test_run(self, test_run_id: str) -> TestRunDescription:
+    def test_run(self, test_run_id: str) -> TestRun:
         ...

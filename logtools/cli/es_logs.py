@@ -4,9 +4,8 @@ from argparse import ArgumentParser
 from datetime import timedelta, datetime
 from enum import Enum
 from json import JSONEncoder
-from typing import List, Iterable, Any
+from typing import List, Iterable, Any, Optional, Set
 
-import rich
 from colored import Style
 from dateutil import parser as tsparser
 from elasticsearch import Elasticsearch
@@ -26,15 +25,77 @@ class ResourceType(Enum):
     runs = 'runs'
 
 
-GETTERS = {
+RESOURCE_GETTERS = {
     ResourceType.pods: lambda repo, args: repo.pods(prefix=args.prefix, run_id=args.run_id),
     ResourceType.namespaces: lambda repo, args: repo.namespaces(prefix=args.prefix),
     ResourceType.runs: lambda repo, args: repo.test_runs(run_id=args.run_id, failed_only=args.failed_only),
 }
 
-DESCRIBERS = {
-    ResourceType.runs: lambda repo, args: repo.describe_test_run(test_run_id=args.test_run_id),
+RESOURCE_DESCRIBERS = {
+    ResourceType.runs: lambda repo, args: repo.test_run(test_run_id=args.test_run_id),
 }
+
+
+def main():
+    parser = ArgumentParser()
+    parser.add_argument(
+        '--es-host',
+        help='ElasticSearch URL (defaults to http://localhost:9200)',
+        default=os.environ.get('ES_HOST', 'http://localhost:9200')
+    )
+
+    subparsers = parser.add_subparsers(title='Command', required=True)
+    _add_get_cli(subparsers)
+    _add_describe_cli(subparsers)
+    _add_logs_cli(subparsers)
+
+    args = parser.parse_args()
+    client = Elasticsearch(args.es_host, request_timeout=60)
+    args.main(args, client)
+
+
+def get_object(args, client: Elasticsearch):
+    repo = ElasticSearchLogRepo(client=client)
+    Console().print(format_table(RESOURCE_GETTERS[ResourceType[args.resource_type]](repo, args)))
+
+
+def describe_object(args, client: Elasticsearch):
+    repo = ElasticSearchLogRepo(client=client)
+    Console().print(format_json([RESOURCE_DESCRIBERS[ResourceType[args.resource_type]](repo, args)]))
+
+
+# FIXME this is starting to get too complex to be here.
+def get_logs(args, client: Elasticsearch):
+    resource = ResourceType[args.resource_type]
+    if resource == ResourceType.pods:
+        get_pod_logs(
+            pods=args.pods,
+            client=client,
+            colored_output=not args.no_color,
+            start_date=args.from_,
+            end_date=args.to,
+        )
+    elif resource == ResourceType.runs:
+        run = ElasticSearchLogRepo(client=client).test_run(test_run_id=args.test_run_id).test_run
+        get_pod_logs(set(run.pods), client, start_date=run.start, end_date=run.end)
+
+
+def get_pod_logs(pods: Set[str],
+                 client: Elasticsearch,
+                 colored_output: bool = True,
+                 start_date: Optional[datetime] = None,
+                 end_date: Optional[datetime] = None):
+    colors = ColorMap()
+    for line in ElasticSearchSource(
+            pods=pods,
+            client=client,
+            start_date=start_date,
+            end_date=end_date,
+    ):
+        output = f'[{line.location.pod_name}]: {line.raw}'
+        if colored_output:
+            output = f'{colors[line.location.pod_name]}{output}{Style.reset}'
+        print(output)
 
 
 def format_table(objects: List, title: str = 'Results') -> Table:
@@ -75,95 +136,60 @@ def _format_field(field: Any):
     return str(field)
 
 
-def get_object(args, client: Elasticsearch):
-    repo = ElasticSearchLogRepo(client=client)
-    Console().print(format_table(GETTERS[ResourceType[args.resource_type]](repo, args)))
-
-
-def describe_object(args, client: Elasticsearch):
-    repo = ElasticSearchLogRepo(client=client)
-    Console().print(format_json([DESCRIBERS[ResourceType[args.resource_type]](repo, args)]))
-
-
-def get_logs(args, client: Elasticsearch):
-    colors = ColorMap()
-    for line in ElasticSearchSource(
-            pods=args.pods,
-            client=client,
-            start_date=args.from_,
-            end_date=args.to,
-    ):
-        output = f'[{line.location.pod_name}]: {line.raw}'
-        if not args.no_color:
-            output = f'{colors[line.location.pod_name]}{output}{Style.reset}'
-        print(output)
-
-
-def main():
-    parser = ArgumentParser()
-    parser.add_argument(
-        '--es-host',
-        help='ElasticSearch URL (defaults to http://localhost:9200)',
-        default=os.environ.get('ES_HOST', 'http://localhost:9200')
-    )
-
-    subparsers = parser.add_subparsers(title='Command', required=True)
-    _add_get_cli(subparsers)
-    _add_describe_cli(subparsers)
-    _add_logs_cli(subparsers)
-
-    args = parser.parse_args()
-    client = Elasticsearch(args.es_host, request_timeout=60)
-    args.main(args, client)
-
-
 def _add_get_cli(subparsers):
-    get = subparsers.add_parser('get', help='Display existing resources')
+    get = subparsers.add_parser('get', help='display existing resources')
     get.add_argument('--from', type=tsparser.parse,
-                     help='Show resources present in log messages starting at the given date '
-                          '(MM-DD-YYYY, or MM-DD-YYYY HH:MM:SS.mmmmmm). Defaults to 7 days ago.',
+                     help='show resources present in log messages starting at the given date '
+                          '(mm-dd-yyyy, or mm-dd-yyyy hh:mm:ss.mmmmmm). defaults to 7 days ago.',
                      default=(datetime.today() - timedelta(days=7)).date())
     get.set_defaults(main=get_object)
 
-    get_subparsers = get.add_subparsers(title='Resource type', dest='resource_type', required=True)
-    get_pods = get_subparsers.add_parser('pods', help='Display existing pods')
-    get_pods.add_argument('--prefix', help='Filter pods by prefix')
-    get_pods.add_argument('--run-id', help='Show pods for a given run', required=True)
+    get_subparsers = get.add_subparsers(title='resource type', dest='resource_type', required=True)
+    get_pods = get_subparsers.add_parser('pods', help='display existing pods')
+    get_pods.add_argument('--prefix', help='filter pods by prefix')
+    get_pods.add_argument('--run-id', help='show pods for a given run', required=True)
 
-    get_namespaces = get_subparsers.add_parser('namespaces', help='Display existing namespaces')
-    get_namespaces.add_argument('--prefix', help='Filter namespaces by prefix')
+    get_namespaces = get_subparsers.add_parser('namespaces', help='display existing namespaces')
+    get_namespaces.add_argument('--prefix', help='filter namespaces by prefix')
 
-    get_namespaces = get_subparsers.add_parser('runs', help='Display current test runs')
-    get_namespaces.add_argument('--run-id', help='Show test runs for the given run id', required=True)
-    get_namespaces.add_argument('--failed-only', action='store_true', help='Show only failed test runs')
+    get_namespaces = get_subparsers.add_parser('runs', help='display current test runs')
+    get_namespaces.add_argument('--run-id', help='show test runs for the given run id', required=True)
+    get_namespaces.add_argument('--failed-only', action='store_true', help='show only failed test runs')
     get_namespaces.add_argument('--from', type=tsparser.parse,
-                                help='Show test runs starting at the given date '
-                                     '(MM-DD-YYYY, or MM-DD-YYYY HH:MM:SS.mmmmmm). Defaults to 7 days ago.',
+                                help='show test runs starting at the given date '
+                                     '(mm-dd-yyyy, or mm-dd-yyyy hh:mm:ss.mmmmmm). defaults to 7 days ago.',
                                 default=(datetime.today() - timedelta(days=7)).date())
 
 
 def _add_describe_cli(subparsers):
-    describe = subparsers.add_parser('describe', help='Describe a resource')
+    describe = subparsers.add_parser('describe', help='describe a resource')
     describe.set_defaults(main=describe_object)
 
-    describe_subparsers = describe.add_subparsers(title='Resource type', dest='resource_type', required=True)
-    describe_runs = describe_subparsers.add_parser('runs', help='Describe a test run')
-    describe_runs.add_argument('test_run_id', help='Show test run details')
+    describe_subparsers = describe.add_subparsers(title='resource type', dest='resource_type', required=True)
+    describe_runs = describe_subparsers.add_parser('runs', help='describe a test run')
+    describe_runs.add_argument('test_run_id', help='show test run details')
     describe_runs.set_defaults(main=describe_object)
 
 
 def _add_logs_cli(subparsers):
-    logs = subparsers.add_parser('logs', help='Fetch pod logs')
+    logs = subparsers.add_parser('logs', help='fetch pod logs')
     logs.set_defaults(main=get_logs)
 
-    logs.add_argument('--pods', nargs='+', help='Pods to fetch logs for', required=True)
-    logs.add_argument('--from', dest='from_', type=tsparser.parse,
-                      help='Show entries from date/time (MM-DD-YYYY, or MM-DD-YYYY HH:MM:SS.mmmmmm), '
+    log_subparsers = logs.add_subparsers(title='resource type', dest='resource_type', required=True)
+
+    logs.add_argument('--no-color', dest='no_color', action='store_true', help='disable colored output')
+
+    pod_logs = log_subparsers.add_parser('pods', help='fetch logs for a pod')
+    pod_logs.add_argument('pods', nargs='+', help='pod names to fetch logs from')
+    pod_logs.add_argument('--from', dest='from_', type=tsparser.parse,
+                      help='show entries from date/time (MM-DD-YYYY, or MM-DD-YYYY HH:MM:SS.mmmmmm), '
                            'treated as UTC if no timezone given', default=None)
-    logs.add_argument('--to', dest='to', type=tsparser.parse,
-                      help='Show entries until date/time (MM-DD-YYYY, or MM-DD-YYYY HH:MM:SS.mmmmmm), '
+    pod_logs.add_argument('--to', dest='to', type=tsparser.parse,
+                      help='show entries until date/time (MM-DD-YYYY, or MM-DD-YYYY HH:MM:SS.mmmmmm), '
                            'treated as UTC if no timezone given', default=None)
-    logs.add_argument('--no-color', dest='no_color', action='store_true', help='Disable colored output')
+
+    run_logs = log_subparsers.add_parser('runs', help='fetch logs for a test run')
+    run_logs.add_argument('test_run_id', help='run ID to fetch logs from')
 
 
 if __name__ == '__main__':

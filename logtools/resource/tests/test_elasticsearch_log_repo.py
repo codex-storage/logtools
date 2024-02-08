@@ -85,7 +85,7 @@ def test_should_respect_time_horizon_for_retrieving_resources():
 @pytest.mark.vcr
 def test_should_retrieve_test_runs_over_a_single_run_id():
     repo = ElasticSearchLogRepo()
-    runs = list(repo.test_runs('20240206-093136'))
+    runs = list(repo.test_runs('20240208-044040'))
 
     assert len(runs) == 14
 
@@ -93,10 +93,10 @@ def test_should_retrieve_test_runs_over_a_single_run_id():
 @pytest.mark.vcr
 def test_should_retrieve_failing_test_runs_over_a_single_run_id():
     repo = ElasticSearchLogRepo()
-    runs = list(repo.test_runs('20240206-093136', failed_only=True))
+    runs = list(repo.test_runs('20240208-044040', failed_only=True))
 
     assert len(runs) == 1
-    assert repo.describe_test_run(runs[0].id).error.strip() == (
+    assert repo.test_run(runs[0].id).error.strip() == (
         "data/zDvZRwzm5UemKDPMvadCu999HrqUnCJGzvKnsF7eiy2XV3TzoW7V/network' timed out after "
         "3 tries over 10 mins, 1 secs."
     )
