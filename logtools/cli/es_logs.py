@@ -153,7 +153,7 @@ def _add_get_cli(subparsers):
     get_namespaces.add_argument('--prefix', help='filter namespaces by prefix')
 
     get_namespaces = get_subparsers.add_parser('runs', help='display current test runs')
-    get_namespaces.add_argument('--run-id', help='show test runs for the given run id', required=True)
+    get_namespaces.add_argument('run_id', help='show test runs for the given run id')
     get_namespaces.add_argument('--failed-only', action='store_true', help='show only failed test runs')
     get_namespaces.add_argument('--from', type=tsparser.parse,
                                 help='show test runs starting at the given date '
