@@ -151,7 +151,7 @@ def _add_get_cli(subparsers):
     get_subparsers = get.add_subparsers(title='resource type', dest='resource_type', required=True)
     get_pods = get_subparsers.add_parser('pods', help='display existing pods')
     get_pods.add_argument('--prefix', help='filter pods by prefix')
-    get_pods.add_argument('--run-id', help='show pods for a given run', required=True)
+    get_pods.add_argument('run_id', help='show pods for a given run')
 
     get_namespaces = get_subparsers.add_parser('namespaces', help='display existing namespaces')
     get_namespaces.add_argument('--prefix', help='filter namespaces by prefix')
