@@ -80,7 +80,8 @@ def get_logs(args, client: Elasticsearch):
         )
     elif resource == ResourceType.runs:
         run = ElasticSearchLogRepo(client=client).test_run(test_run_id=args.test_run_id).test_run
-        get_pod_logs(set(run.pods), client, limit=args.limit, start_date=run.start, end_date=run.end)
+        get_pod_logs(set(run.pods).union(set(args.additional_pods)),
+                     client, limit=args.limit, start_date=run.start, end_date=run.end)
 
 
 def get_pod_logs(pods: Set[str],
@@ -196,6 +197,8 @@ def _add_logs_cli(subparsers):
 
     run_logs = log_subparsers.add_parser('runs', help='fetch logs for a test run')
     run_logs.add_argument('test_run_id', help='run ID to fetch logs from')
+    run_logs.add_argument('--additional-pods', nargs='+', help='in addition to the pods in the test run, also '
+                                                               'fetches logs from these pods')
 
 
 if __name__ == '__main__':
