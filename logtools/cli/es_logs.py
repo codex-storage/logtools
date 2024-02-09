@@ -14,10 +14,10 @@ from rich.console import Console
 from rich.json import JSON
 from rich.table import Table
 
+from logtools import version_string
 from logtools.cli.palettes import ColorMap
 from logtools.log.sources.input.elastic_search_source import ElasticSearchSource
 from logtools.resource.elastic_search_log_repo import ElasticSearchLogRepo
-from logtools import version_string
 
 
 class ResourceType(Enum):
@@ -79,21 +79,23 @@ def get_logs(args, client: Elasticsearch):
         )
     elif resource == ResourceType.runs:
         run = ElasticSearchLogRepo(client=client).test_run(test_run_id=args.test_run_id).test_run
-        get_pod_logs(set(run.pods), client, start_date=run.start, end_date=run.end)
+        get_pod_logs(set(run.pods), client, limit=args.limit, start_date=run.start, end_date=run.end)
 
 
 def get_pod_logs(pods: Set[str],
                  client: Elasticsearch,
                  colored_output: bool = True,
+                 limit: Optional[int] = None,
                  start_date: Optional[datetime] = None,
                  end_date: Optional[datetime] = None):
     colors = ColorMap()
-    for line in ElasticSearchSource(
+    for i, line in enumerate(ElasticSearchSource(
             pods=pods,
             client=client,
             start_date=start_date,
             end_date=end_date,
-    ):
+            limit=limit,
+    )):
         output = f'[{line.location.pod_name}]: {line.raw}'
         if colored_output:
             output = f'{colors[line.location.pod_name]}{output}{Style.reset}'
@@ -176,6 +178,7 @@ def _add_describe_cli(subparsers):
 def _add_logs_cli(subparsers):
     logs = subparsers.add_parser('logs', help='fetch pod logs')
     logs.set_defaults(main=get_logs)
+    logs.add_argument('--limit', type=int, help='limit the number of log entries to fetch')
 
     log_subparsers = logs.add_subparsers(title='resource type', dest='resource_type', required=True)
 
@@ -184,11 +187,11 @@ def _add_logs_cli(subparsers):
     pod_logs = log_subparsers.add_parser('pods', help='fetch logs for a pod')
     pod_logs.add_argument('pods', nargs='+', help='pod names to fetch logs from')
     pod_logs.add_argument('--from', dest='from_', type=tsparser.parse,
-                      help='show entries from date/time (MM-DD-YYYY, or MM-DD-YYYY HH:MM:SS.mmmmmm), '
-                           'treated as UTC if no timezone given', default=None)
+                          help='show entries from date/time (MM-DD-YYYY, or MM-DD-YYYY HH:MM:SS.mmmmmm), '
+                               'treated as UTC if no timezone given', default=None)
     pod_logs.add_argument('--to', dest='to', type=tsparser.parse,
-                      help='show entries until date/time (MM-DD-YYYY, or MM-DD-YYYY HH:MM:SS.mmmmmm), '
-                           'treated as UTC if no timezone given', default=None)
+                          help='show entries until date/time (MM-DD-YYYY, or MM-DD-YYYY HH:MM:SS.mmmmmm), '
+                               'treated as UTC if no timezone given', default=None)
 
     run_logs = log_subparsers.add_parser('runs', help='fetch logs for a test run')
     run_logs.add_argument('test_run_id', help='run ID to fetch logs from')

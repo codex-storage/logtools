@@ -11,6 +11,7 @@ from logtools.log.utils import tree
 logger = logging.getLogger(__name__)
 
 INDEX_PREFIX = 'continuous-tests-pods'
+ES_MAX_BATCH_SIZE = 10_000
 
 
 @dataclass
@@ -29,6 +30,8 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
             client: Optional[Elasticsearch] = None,
             start_date: Optional[datetime] = None,
             end_date: Optional[datetime] = None,
+            limit: Optional[int] = None,
+            es_batch_size=ES_MAX_BATCH_SIZE
     ):
         if client is None:
             logger.warning('No client provided, defaulting to localhost')
@@ -40,6 +43,9 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
         self.client = client
         self.start_date = start_date
         self.end_date = end_date
+        self.limit = limit
+        self.es_batch_size = es_batch_size
+        self.page_fetch_counter = 0
 
     def __iter__(self) -> Iterator[TimestampedLogLine[ElasticSearchLocation]]:
         for index in self._indices():
@@ -88,8 +94,11 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
         return query
 
     def _run_scan(self, query: Dict[str, Any], index: str):
-        # the search type stub does not contain the body argument for some reason so we disable typing here.
-        initial = self.client.search(index=index, body=query, size=10_000, scroll='2m')  # type: ignore
+        remaining = self.limit if self.limit is not None else float('inf')
+        # XXX the search type stub does not contain the body argument for some reason so we disable typing here.
+        initial = self.client.search(index=index, body=query, size=min(remaining, self.es_batch_size),
+                                     scroll='2m')  # type: ignore
+        self.page_fetch_counter += 1
         scroll_id = initial['_scroll_id']
         results = initial
 
@@ -97,12 +106,16 @@ class ElasticSearchSource(LogSource[TimestampedLogLine[ElasticSearchLocation]]):
             while True:
                 documents = results['hits']['hits']
                 if not documents:
-                    break
+                    return
 
                 for doc in documents:
                     yield doc
+                    remaining -= 1
+                    if remaining <= 0:
+                        return
 
                 results = self.client.scroll(scroll_id=scroll_id, scroll='2m')
+                self.page_fetch_counter += 1
         finally:
             self.client.clear_scroll(scroll_id=scroll_id)
 

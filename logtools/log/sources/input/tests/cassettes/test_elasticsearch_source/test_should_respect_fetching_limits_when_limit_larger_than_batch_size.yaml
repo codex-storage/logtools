@@ -1,0 +1,132 @@
+interactions:
+- request:
+    body: '{"query":{"bool":{"filter":[{"terms":{"pod_name.keyword":["codex1-3-6c565dbd66-wxg49"]}},{"term":{"pod_labels.runid.keyword":"20240208-115030"}}]}},"size":7,"sort":[{"@timestamp":"asc"}]}'
+    headers:
+      accept:
+      - application/vnd.elasticsearch+json; compatible-with=8
+      connection:
+      - keep-alive
+      content-type:
+      - application/vnd.elasticsearch+json; compatible-with=8
+      user-agent:
+      - elasticsearch-py/8.10.1 (Python/3.11.5; elastic-transport/8.10.0)
+      x-elastic-client-meta:
+      - es=8.10.1,py=3.11.5,t=8.10.0,ur=2.0.7
+    method: POST
+    uri: http://localhost:9200/continuous-tests-pods-*/_search?scroll=2m
+  response:
+    body:
+      string: '{"_scroll_id":"FGluY2x1ZGVfY29udGV4dF91dWlkDnF1ZXJ5VGhlbkZldGNoDBZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YgWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YwWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YoWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YkWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YsWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7Y0WVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7Y4WVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7ZMWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7ZAWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7Y8WVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7ZEWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7ZIWVmdpQjdNT1RUM3VuSmxXekR6ZnREZw==","took":13,"timed_out":false,"_shards":{"total":12,"successful":12,"skipped":0,"failed":0},"hits":{"total":{"value":80036,"relation":"eq"},"max_score":null,"hits":[{"_index":"continuous-tests-pods-2024.02.08","_id":"lpQmi40BTe2pYqi1cfr7","_score":null,"_source":{"@timestamp":"2024-02-08T23:56:03.918606306Z","container_image":"docker.io/codexstorage/nim-codex:sha-a3c95be-dist-tests","container_name":"codex1-3","file":"/var/log/pods/two-client-test-bugfix_codex1-3-6c565dbd66-wxg49_0ad5dc26-09e2-47e4-9257-c7dc372068d4/codex1-3/0.log","message":"Internal:
+        Set CODEX_NAT: 10.244.4.178","pod_labels":{"app":"codex","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexdiscordbotid":"thatbenbierens-codex-discordbot-initial","codexid":"docker.io-codexstorage/nim-codex:sha-a3c95be-dist-tests","codexrevision":"unknown","gethid":"codexstorage/dist-tests-geth:latest","pod-template-hash":"6c565dbd66","pod-uuid":"253f4886-a27b-4398-8d46-9f86fd1ded9c","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","testid":"envvar-testid-notset","tests-type":"continuous-tests"},"pod_name":"codex1-3-6c565dbd66-wxg49","pod_namespace":"two-client-test-bugfix","pod_node_name":"tests-s-4vcpu-8gb-ojxa3"},"sort":[1707436563918]},{"_index":"continuous-tests-pods-2024.02.08","_id":"l5Qmi40BTe2pYqi1cfr7","_score":null,"_source":{"@timestamp":"2024-02-08T23:56:03.918876891Z","container_image":"docker.io/codexstorage/nim-codex:sha-a3c95be-dist-tests","container_name":"codex1-3","file":"/var/log/pods/two-client-test-bugfix_codex1-3-6c565dbd66-wxg49_0ad5dc26-09e2-47e4-9257-c7dc372068d4/codex1-3/0.log","message":"Run
+        Codex node","pod_labels":{"app":"codex","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexdiscordbotid":"thatbenbierens-codex-discordbot-initial","codexid":"docker.io-codexstorage/nim-codex:sha-a3c95be-dist-tests","codexrevision":"unknown","gethid":"codexstorage/dist-tests-geth:latest","pod-template-hash":"6c565dbd66","pod-uuid":"253f4886-a27b-4398-8d46-9f86fd1ded9c","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","testid":"envvar-testid-notset","tests-type":"continuous-tests"},"pod_name":"codex1-3-6c565dbd66-wxg49","pod_namespace":"two-client-test-bugfix","pod_node_name":"tests-s-4vcpu-8gb-ojxa3"},"sort":[1707436563918]},{"_index":"continuous-tests-pods-2024.02.08","_id":"mJQmi40BTe2pYqi1cfr7","_score":null,"_source":{"@timestamp":"2024-02-08T23:56:03.927052796Z","container_image":"docker.io/codexstorage/nim-codex:sha-a3c95be-dist-tests","container_name":"codex1-3","file":"/var/log/pods/two-client-test-bugfix_codex1-3-6c565dbd66-wxg49_0ad5dc26-09e2-47e4-9257-c7dc372068d4/codex1-3/0.log","message":"NOT
+        2024-02-08 23:56:03.926+00:00 Starting metrics HTTP server               tid=1
+        url=http://0.0.0.0:30006/metrics count=1","pod_labels":{"app":"codex","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexdiscordbotid":"thatbenbierens-codex-discordbot-initial","codexid":"docker.io-codexstorage/nim-codex:sha-a3c95be-dist-tests","codexrevision":"unknown","gethid":"codexstorage/dist-tests-geth:latest","pod-template-hash":"6c565dbd66","pod-uuid":"253f4886-a27b-4398-8d46-9f86fd1ded9c","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","testid":"envvar-testid-notset","tests-type":"continuous-tests"},"pod_name":"codex1-3-6c565dbd66-wxg49","pod_namespace":"two-client-test-bugfix","pod_node_name":"tests-s-4vcpu-8gb-ojxa3"},"sort":[1707436563927]},{"_index":"continuous-tests-pods-2024.02.08","_id":"mZQmi40BTe2pYqi1cfr7","_score":null,"_source":{"@timestamp":"2024-02-08T23:56:03.934921297Z","container_image":"docker.io/codexstorage/nim-codex:sha-a3c95be-dist-tests","container_name":"codex1-3","file":"/var/log/pods/two-client-test-bugfix_codex1-3-6c565dbd66-wxg49_0ad5dc26-09e2-47e4-9257-c7dc372068d4/codex1-3/0.log","message":"WRN
+        2024-02-08 23:56:03.926+00:00 Data directory has insecure permissions. Correcting
+        them. tid=1 data_dir=datadir3 current_permissions=0755 required_permissions=0700
+        count=2","pod_labels":{"app":"codex","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexdiscordbotid":"thatbenbierens-codex-discordbot-initial","codexid":"docker.io-codexstorage/nim-codex:sha-a3c95be-dist-tests","codexrevision":"unknown","gethid":"codexstorage/dist-tests-geth:latest","pod-template-hash":"6c565dbd66","pod-uuid":"253f4886-a27b-4398-8d46-9f86fd1ded9c","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","testid":"envvar-testid-notset","tests-type":"continuous-tests"},"pod_name":"codex1-3-6c565dbd66-wxg49","pod_namespace":"two-client-test-bugfix","pod_node_name":"tests-s-4vcpu-8gb-ojxa3"},"sort":[1707436563934]},{"_index":"continuous-tests-pods-2024.02.08","_id":"mpQmi40BTe2pYqi1cfr7","_score":null,"_source":{"@timestamp":"2024-02-08T23:56:03.934945015Z","container_image":"docker.io/codexstorage/nim-codex:sha-a3c95be-dist-tests","container_name":"codex1-3","file":"/var/log/pods/two-client-test-bugfix_codex1-3-6c565dbd66-wxg49_0ad5dc26-09e2-47e4-9257-c7dc372068d4/codex1-3/0.log","message":"TRC
+        2024-02-08 23:56:03.926+00:00 Data dir initialized                       topics=\"codex\"
+        tid=1 dir=datadir3 count=3","pod_labels":{"app":"codex","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexdiscordbotid":"thatbenbierens-codex-discordbot-initial","codexid":"docker.io-codexstorage/nim-codex:sha-a3c95be-dist-tests","codexrevision":"unknown","gethid":"codexstorage/dist-tests-geth:latest","pod-template-hash":"6c565dbd66","pod-uuid":"253f4886-a27b-4398-8d46-9f86fd1ded9c","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","testid":"envvar-testid-notset","tests-type":"continuous-tests"},"pod_name":"codex1-3-6c565dbd66-wxg49","pod_namespace":"two-client-test-bugfix","pod_node_name":"tests-s-4vcpu-8gb-ojxa3"},"sort":[1707436563934]},{"_index":"continuous-tests-pods-2024.02.08","_id":"m5Qmi40BTe2pYqi1cfr7","_score":null,"_source":{"@timestamp":"2024-02-08T23:56:03.934955237Z","container_image":"docker.io/codexstorage/nim-codex:sha-a3c95be-dist-tests","container_name":"codex1-3","file":"/var/log/pods/two-client-test-bugfix_codex1-3-6c565dbd66-wxg49_0ad5dc26-09e2-47e4-9257-c7dc372068d4/codex1-3/0.log","message":"TRC
+        2024-02-08 23:56:03.929+00:00 Repo dir initialized                       topics=\"codex\"
+        tid=1 dir=datadir3/repo count=4","pod_labels":{"app":"codex","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexdiscordbotid":"thatbenbierens-codex-discordbot-initial","codexid":"docker.io-codexstorage/nim-codex:sha-a3c95be-dist-tests","codexrevision":"unknown","gethid":"codexstorage/dist-tests-geth:latest","pod-template-hash":"6c565dbd66","pod-uuid":"253f4886-a27b-4398-8d46-9f86fd1ded9c","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","testid":"envvar-testid-notset","tests-type":"continuous-tests"},"pod_name":"codex1-3-6c565dbd66-wxg49","pod_namespace":"two-client-test-bugfix","pod_node_name":"tests-s-4vcpu-8gb-ojxa3"},"sort":[1707436563934]},{"_index":"continuous-tests-pods-2024.02.08","_id":"nJQmi40BTe2pYqi1cfr7","_score":null,"_source":{"@timestamp":"2024-02-08T23:56:03.934960073Z","container_image":"docker.io/codexstorage/nim-codex:sha-a3c95be-dist-tests","container_name":"codex1-3","file":"/var/log/pods/two-client-test-bugfix_codex1-3-6c565dbd66-wxg49_0ad5dc26-09e2-47e4-9257-c7dc372068d4/codex1-3/0.log","message":"INF
+        2024-02-08 23:56:03.929+00:00 Creating a private key and saving it       tid=1
+        count=5","pod_labels":{"app":"codex","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexdiscordbotid":"thatbenbierens-codex-discordbot-initial","codexid":"docker.io-codexstorage/nim-codex:sha-a3c95be-dist-tests","codexrevision":"unknown","gethid":"codexstorage/dist-tests-geth:latest","pod-template-hash":"6c565dbd66","pod-uuid":"253f4886-a27b-4398-8d46-9f86fd1ded9c","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","testid":"envvar-testid-notset","tests-type":"continuous-tests"},"pod_name":"codex1-3-6c565dbd66-wxg49","pod_namespace":"two-client-test-bugfix","pod_node_name":"tests-s-4vcpu-8gb-ojxa3"},"sort":[1707436563934]}]}}'
+    headers:
+      Transfer-Encoding:
+      - chunked
+      X-elastic-product:
+      - Elasticsearch
+      content-type:
+      - application/vnd.elasticsearch+json;compatible-with=8
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"scroll_id":"FGluY2x1ZGVfY29udGV4dF91dWlkDnF1ZXJ5VGhlbkZldGNoDBZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YgWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YwWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YoWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YkWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YsWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7Y0WVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7Y4WVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7ZMWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7ZAWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7Y8WVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7ZEWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7ZIWVmdpQjdNT1RUM3VuSmxXekR6ZnREZw==","scroll":"2m"}'
+    headers:
+      accept:
+      - application/vnd.elasticsearch+json; compatible-with=8
+      connection:
+      - keep-alive
+      content-type:
+      - application/vnd.elasticsearch+json; compatible-with=8
+      user-agent:
+      - elasticsearch-py/8.10.1 (Python/3.11.5; elastic-transport/8.10.0)
+      x-elastic-client-meta:
+      - es=8.10.1,py=3.11.5,t=8.10.0,ur=2.0.7
+    method: POST
+    uri: http://localhost:9200/_search/scroll
+  response:
+    body:
+      string: '{"_scroll_id":"FGluY2x1ZGVfY29udGV4dF91dWlkDnF1ZXJ5VGhlbkZldGNoDBZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YgWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YwWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YoWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YkWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YsWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7Y0WVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7Y4WVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7ZMWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7ZAWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7Y8WVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7ZEWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7ZIWVmdpQjdNT1RUM3VuSmxXekR6ZnREZw==","took":3,"timed_out":false,"_shards":{"total":12,"successful":12,"skipped":0,"failed":0},"hits":{"total":{"value":80036,"relation":"eq"},"max_score":null,"hits":[{"_index":"continuous-tests-pods-2024.02.08","_id":"nZQmi40BTe2pYqi1cfr7","_score":null,"_source":{"@timestamp":"2024-02-08T23:56:03.950492498Z","container_image":"docker.io/codexstorage/nim-codex:sha-a3c95be-dist-tests","container_name":"codex1-3","file":"/var/log/pods/two-client-test-bugfix_codex1-3-6c565dbd66-wxg49_0ad5dc26-09e2-47e4-9257-c7dc372068d4/codex1-3/0.log","message":"TRC
+        2024-02-08 23:56:03.950+00:00 Updating announce record                   topics=\"codex
+        discovery\" tid=1 addrs=@[/ip4/0.0.0.0/tcp/8081] count=6","pod_labels":{"app":"codex","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexdiscordbotid":"thatbenbierens-codex-discordbot-initial","codexid":"docker.io-codexstorage/nim-codex:sha-a3c95be-dist-tests","codexrevision":"unknown","gethid":"codexstorage/dist-tests-geth:latest","pod-template-hash":"6c565dbd66","pod-uuid":"253f4886-a27b-4398-8d46-9f86fd1ded9c","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","testid":"envvar-testid-notset","tests-type":"continuous-tests"},"pod_name":"codex1-3-6c565dbd66-wxg49","pod_namespace":"two-client-test-bugfix","pod_node_name":"tests-s-4vcpu-8gb-ojxa3"},"sort":[1707436563950]},{"_index":"continuous-tests-pods-2024.02.08","_id":"npQmi40BTe2pYqi1cfr7","_score":null,"_ignored":["message.keyword"],"_source":{"@timestamp":"2024-02-08T23:56:03.969109839Z","container_image":"docker.io/codexstorage/nim-codex:sha-a3c95be-dist-tests","container_name":"codex1-3","file":"/var/log/pods/two-client-test-bugfix_codex1-3-6c565dbd66-wxg49_0ad5dc26-09e2-47e4-9257-c7dc372068d4/codex1-3/0.log","message":"TRC
+        2024-02-08 23:56:03.968+00:00 Starting codex node                        topics=\"codex
+        node\" tid=1 config=\"(configFile: none(InputFile), logLevel: \\\"TRACE;warn:discv5,providers,manager,cache;warn:libp2p,multistream,switch,transport,tcptransport,semaphore,asyncstreamwrapper,lpstream,mplex,mplexchannel,noise,bufferstream,mplexcoder,secure,chronosstream,connection,connmanager,websock,ws-session,dialer,muxedupgrade,upgrade,identify\\\",
+        logFormat: auto, metricsEnabled: true, metricsAddress: 0.0.0.0, metricsPort:
+        30006, dataDir: datadir3, profilerMaxMetrics: 100, cmd: noCommand, listenAddrs:
+        @[/ip4/0.0.0.0/tcp/8081], nat: 10.244.4.178, discoveryIp: 0.0.0.0, discoveryPort:
+        8080, netPrivKeyFile: \\\"key\\\", bootstrapNodes: @[(envelope: (publicKey:
+        secp256k1 key (040b1beda7b6b56401c2c29554df74729e75b0906d0e8848dcc5dd04b28d2fcad4bd0b489cdc7a5a3a1c0e9ec0d0d3d8004c946da4baa1752fcb201feda1304d3b),
+        domain: \\\"libp2p-peer-record\\\", payloadType: @[3, 1], payload: @[10, 39,
+        0, 37, 8, 2, 18, 33, 3, 11, 27, 237, 167, 182, 181, 100, 1, 194, 194, 149,
+        84, 223, 116, 114, 158, 117, 176, 144, 109, 14, 136, 72, 220, 197, 221, 4,
+        178, 141, 47, 202, 212, 16, 178, 210, 149, 174, 6, 26, 11, 10, 9, 4, 10, 244,
+        2, 44, 145, 2, 31, 144], signature: 304402201C49248DA73B2055951C115F46301D8D2B72FAF83423CC45F69E9BED8F1E9679022076A752567FD7D7E7A262D90121C9B69DA9D76648728E23C1DAE6EDBB6B2A6811),
+        data: (peerId: 16Uiu2HAmDQMXzu725FEnd6pgzJr6iLJGt8TffyNK673VBArAMptT, seqNo:
+        1707436338, addresses: @[(address: /ip4/10.244.2.44/udp/8080)]))], maxPeers:
+        160, agentString: \\\"Codex\\\", apiBindAddress: \\\"0.0.0.0\\\", apiPort:
+        30005, repoKind: fs, storageQuota: 62914560000\\''NByte, blockTtl: 16w3d17h46m39s,
+        blockMaintenanceInterval: 16w3d17h46m39s, blockMaintenanceNumberOfBlocks:
+        10000, cacheSize: 0\\''NByte, persistence: false, ethProvider: \\\"ws://localhost:8545\\\",
+        ethAccount: none(Address), ethPrivateKey: none(string), marketplaceAddress:
+        none(Address), validator: false, validatorMaxSlots: 1000, simulateProofFailures:
+        0, logFile: none(string))\" count=7","pod_labels":{"app":"codex","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexdiscordbotid":"thatbenbierens-codex-discordbot-initial","codexid":"docker.io-codexstorage/nim-codex:sha-a3c95be-dist-tests","codexrevision":"unknown","gethid":"codexstorage/dist-tests-geth:latest","pod-template-hash":"6c565dbd66","pod-uuid":"253f4886-a27b-4398-8d46-9f86fd1ded9c","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","testid":"envvar-testid-notset","tests-type":"continuous-tests"},"pod_name":"codex1-3-6c565dbd66-wxg49","pod_namespace":"two-client-test-bugfix","pod_node_name":"tests-s-4vcpu-8gb-ojxa3"},"sort":[1707436563969]},{"_index":"continuous-tests-pods-2024.02.08","_id":"n5Qmi40BTe2pYqi1cfr7","_score":null,"_source":{"@timestamp":"2024-02-08T23:56:03.969228477Z","container_image":"docker.io/codexstorage/nim-codex:sha-a3c95be-dist-tests","container_name":"codex1-3","file":"/var/log/pods/two-client-test-bugfix_codex1-3-6c565dbd66-wxg49_0ad5dc26-09e2-47e4-9257-c7dc372068d4/codex1-3/0.log","message":"TRC
+        2024-02-08 23:56:03.968+00:00 Starting repo                              topics=\"codex
+        repostore\" tid=1 count=8","pod_labels":{"app":"codex","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexdiscordbotid":"thatbenbierens-codex-discordbot-initial","codexid":"docker.io-codexstorage/nim-codex:sha-a3c95be-dist-tests","codexrevision":"unknown","gethid":"codexstorage/dist-tests-geth:latest","pod-template-hash":"6c565dbd66","pod-uuid":"253f4886-a27b-4398-8d46-9f86fd1ded9c","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","testid":"envvar-testid-notset","tests-type":"continuous-tests"},"pod_name":"codex1-3-6c565dbd66-wxg49","pod_namespace":"two-client-test-bugfix","pod_node_name":"tests-s-4vcpu-8gb-ojxa3"},"sort":[1707436563969]},{"_index":"continuous-tests-pods-2024.02.08","_id":"oJQmi40BTe2pYqi1cfr7","_score":null,"_source":{"@timestamp":"2024-02-08T23:56:03.969273960Z","container_image":"docker.io/codexstorage/nim-codex:sha-a3c95be-dist-tests","container_name":"codex1-3","file":"/var/log/pods/two-client-test-bugfix_codex1-3-6c565dbd66-wxg49_0ad5dc26-09e2-47e4-9257-c7dc372068d4/codex1-3/0.log","message":"TRC
+        2024-02-08 23:56:03.969+00:00 Number of blocks in store at start         topics=\"codex
+        repostore\" tid=1 total=0 count=9","pod_labels":{"app":"codex","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexdiscordbotid":"thatbenbierens-codex-discordbot-initial","codexid":"docker.io-codexstorage/nim-codex:sha-a3c95be-dist-tests","codexrevision":"unknown","gethid":"codexstorage/dist-tests-geth:latest","pod-template-hash":"6c565dbd66","pod-uuid":"253f4886-a27b-4398-8d46-9f86fd1ded9c","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","testid":"envvar-testid-notset","tests-type":"continuous-tests"},"pod_name":"codex1-3-6c565dbd66-wxg49","pod_namespace":"two-client-test-bugfix","pod_node_name":"tests-s-4vcpu-8gb-ojxa3"},"sort":[1707436563969]},{"_index":"continuous-tests-pods-2024.02.08","_id":"oZQmi40BTe2pYqi1cfr7","_score":null,"_source":{"@timestamp":"2024-02-08T23:56:03.969452435Z","container_image":"docker.io/codexstorage/nim-codex:sha-a3c95be-dist-tests","container_name":"codex1-3","file":"/var/log/pods/two-client-test-bugfix_codex1-3-6c565dbd66-wxg49_0ad5dc26-09e2-47e4-9257-c7dc372068d4/codex1-3/0.log","message":"NOT
+        2024-02-08 23:56:03.969+00:00 Current bytes used for cache quota         topics=\"codex
+        repostore\" tid=1 bytes=0 count=10","pod_labels":{"app":"codex","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexdiscordbotid":"thatbenbierens-codex-discordbot-initial","codexid":"docker.io-codexstorage/nim-codex:sha-a3c95be-dist-tests","codexrevision":"unknown","gethid":"codexstorage/dist-tests-geth:latest","pod-template-hash":"6c565dbd66","pod-uuid":"253f4886-a27b-4398-8d46-9f86fd1ded9c","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","testid":"envvar-testid-notset","tests-type":"continuous-tests"},"pod_name":"codex1-3-6c565dbd66-wxg49","pod_namespace":"two-client-test-bugfix","pod_node_name":"tests-s-4vcpu-8gb-ojxa3"},"sort":[1707436563969]},{"_index":"continuous-tests-pods-2024.02.08","_id":"opQmi40BTe2pYqi1cfr7","_score":null,"_source":{"@timestamp":"2024-02-08T23:56:03.969572555Z","container_image":"docker.io/codexstorage/nim-codex:sha-a3c95be-dist-tests","container_name":"codex1-3","file":"/var/log/pods/two-client-test-bugfix_codex1-3-6c565dbd66-wxg49_0ad5dc26-09e2-47e4-9257-c7dc372068d4/codex1-3/0.log","message":"NOT
+        2024-02-08 23:56:03.969+00:00 Current bytes used for persist quota       topics=\"codex
+        repostore\" tid=1 bytes=0 count=11","pod_labels":{"app":"codex","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexdiscordbotid":"thatbenbierens-codex-discordbot-initial","codexid":"docker.io-codexstorage/nim-codex:sha-a3c95be-dist-tests","codexrevision":"unknown","gethid":"codexstorage/dist-tests-geth:latest","pod-template-hash":"6c565dbd66","pod-uuid":"253f4886-a27b-4398-8d46-9f86fd1ded9c","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","testid":"envvar-testid-notset","tests-type":"continuous-tests"},"pod_name":"codex1-3-6c565dbd66-wxg49","pod_namespace":"two-client-test-bugfix","pod_node_name":"tests-s-4vcpu-8gb-ojxa3"},"sort":[1707436563969]},{"_index":"continuous-tests-pods-2024.02.08","_id":"o5Qmi40BTe2pYqi1cfr7","_score":null,"_source":{"@timestamp":"2024-02-08T23:56:03.969654771Z","container_image":"docker.io/codexstorage/nim-codex:sha-a3c95be-dist-tests","container_name":"codex1-3","file":"/var/log/pods/two-client-test-bugfix_codex1-3-6c565dbd66-wxg49_0ad5dc26-09e2-47e4-9257-c7dc372068d4/codex1-3/0.log","message":"TRC
+        2024-02-08 23:56:03.969+00:00 Timer starting:                            tid=1
+        name=\"Unnamed Timer\" count=12","pod_labels":{"app":"codex","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexdiscordbotid":"thatbenbierens-codex-discordbot-initial","codexid":"docker.io-codexstorage/nim-codex:sha-a3c95be-dist-tests","codexrevision":"unknown","gethid":"codexstorage/dist-tests-geth:latest","pod-template-hash":"6c565dbd66","pod-uuid":"253f4886-a27b-4398-8d46-9f86fd1ded9c","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","testid":"envvar-testid-notset","tests-type":"continuous-tests"},"pod_name":"codex1-3-6c565dbd66-wxg49","pod_namespace":"two-client-test-bugfix","pod_node_name":"tests-s-4vcpu-8gb-ojxa3"},"sort":[1707436563969]}]}}'
+    headers:
+      Transfer-Encoding:
+      - chunked
+      X-elastic-product:
+      - Elasticsearch
+      content-type:
+      - application/vnd.elasticsearch+json;compatible-with=8
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"scroll_id":"FGluY2x1ZGVfY29udGV4dF91dWlkDnF1ZXJ5VGhlbkZldGNoDBZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YgWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YwWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YoWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YkWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7YsWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7Y0WVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7Y4WVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7ZMWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7ZAWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7Y8WVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7ZEWVmdpQjdNT1RUM3VuSmxXekR6ZnREZxZ4RF9qaURMaFJWT19DcWhQTTVxdzZnAAAAAAAl7ZIWVmdpQjdNT1RUM3VuSmxXekR6ZnREZw=="}'
+    headers:
+      accept:
+      - application/vnd.elasticsearch+json; compatible-with=8
+      connection:
+      - keep-alive
+      content-type:
+      - application/vnd.elasticsearch+json; compatible-with=8
+      user-agent:
+      - elasticsearch-py/8.10.1 (Python/3.11.5; elastic-transport/8.10.0)
+      x-elastic-client-meta:
+      - es=8.10.1,py=3.11.5,t=8.10.0,ur=2.0.7
+    method: DELETE
+    uri: http://localhost:9200/_search/scroll
+  response:
+    body:
+      string: '{"succeeded":true,"num_freed":12}'
+    headers:
+      X-elastic-product:
+      - Elasticsearch
+      content-length:
+      - '33'
+      content-type:
+      - application/vnd.elasticsearch+json;compatible-with=8
+    status:
+      code: 200
+      message: OK
+version: 1
