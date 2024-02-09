@@ -76,6 +76,7 @@ def get_logs(args, client: Elasticsearch):
             colored_output=not args.no_color,
             start_date=args.from_,
             end_date=args.to,
+            limit=args.limit,
         )
     elif resource == ResourceType.runs:
         run = ElasticSearchLogRepo(client=client).test_run(test_run_id=args.test_run_id).test_run
