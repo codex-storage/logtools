@@ -1,0 +1,287 @@
+interactions:
+- request:
+    body: '{"query":{"bool":{"filter":[{"term":{"runid.keyword":"20240208-115030"}}]}},"size":10000,"sort":[{"@timestamp":"desc"}]}'
+    headers:
+      accept:
+      - application/vnd.elasticsearch+json; compatible-with=8
+      connection:
+      - keep-alive
+      content-type:
+      - application/vnd.elasticsearch+json; compatible-with=8
+      user-agent:
+      - elasticsearch-py/8.10.1 (Python/3.11.5; elastic-transport/8.10.0)
+      x-elastic-client-meta:
+      - es=8.10.1,py=3.11.5,t=8.10.0,ur=2.0.7
+    method: POST
+    uri: http://localhost:9200/continuous-tests-status-*/_search
+  response:
+    body:
+      string: '{"took":4,"timed_out":false,"_shards":{"total":25,"successful":25,"skipped":0,"failed":0},"hits":{"total":{"value":34,"relation":"eq"},"max_score":null,"hits":[{"_index":"continuous-tests-status-2024.02.09","_id":"VEbGi40BTe2pYqi1mE3V","_score":null,"_ignored":["message.keyword"],"_source":{"@timestamp":"2024-02-09T02:50:57.1125777Z","avgupload":"1.2MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":" data/zDvZRwzkz4EQMAECwa519qerKWmxMfeEgy4hneFg3Yr1xZZ7jHBU/network''
+        timed out after 3 tries over 10 mins, 1 secs.","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"bootstrap-2-75ffd985d5-sqhj5,codex2-4-8574cf7cdf-z75qr","involvedpods":"<BOOTSTRAP2>,<CODEX24>","message":"System.Exception:
+        System.TimeoutException: Retry ''HTTP-GET-STREAM: data/zDvZRwzkz4EQMAECwa519qerKWmxMfeEgy4hneFg3Yr1xZZ7jHBU/network''
+        timed out after 3 tries over 10 mins, 1 secs.\n ---> System.AggregateException:
+        One or more errors occurred. (One or more errors occurred. (A task was canceled.))
+        (One or more errors occurred. (A task was canceled.)) (One or more errors
+        occurred. (A task was canceled.)) (One or more errors occurred. (Connection
+        refused (codex2-4-8-int.two-client-test-bugfix.svc.cluster.local:30007)))\n
+        ---> System.AggregateException: One or more errors occurred. (A task was canceled.)\n
+        ---> System.Threading.Tasks.TaskCanceledException: A task was canceled.\n   at
+        System.Threading.Tasks.Task.GetExceptions(Boolean includeTaskCanceledExceptions)\n   at
+        System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)\n   at
+        System.Threading.Tasks.Task.Wait(Int32 millisecondsTimeout, CancellationToken
+        cancellationToken)\n   at System.Threading.Tasks.Task.Wait()\n   at Utils.Time.Wait[T](Task`1
+        task) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line 12\n   at Core.Http.<>c__DisplayClass15_0.<HttpGetStream>b__0()
+        in /cs-codex-dist-tests/Framework/Core/Http.cs:line 125\n   at Utils.Time.Retry[T](Func`1
+        action, Int32 maxRetries, TimeSpan retryTime, String description) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line
+        144\n   at Core.Http.LockRetry[T](Func`1 operation, String description) in
+        /cs-codex-dist-tests/Framework/Core/Http.cs:line 212\n   at Core.Http.HttpGetStream(String
+        route) in /cs-codex-dist-tests/Framework/Core/Http.cs:line 120\n   at CodexPlugin.CodexAccess.DownloadFile(String
+        contentId) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexAccess.cs:line
+        71\n   at CodexPlugin.CodexNode.DownloadToFile(String contentId, TrackedFile
+        file) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line
+        200\n   at CodexPlugin.CodexNode.<>c__DisplayClass35_0.<DownloadContent>b__0()
+        in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line 128\n   at
+        Logging.Stopwatch.Measure(ILog log, String name, Action action, Boolean debug)
+        in /cs-codex-dist-tests/Framework/Logging/Stopwatch.cs:line 22\n   at CodexPlugin.CodexNode.DownloadContent(ContentId
+        contentId, String fileLabel) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line
+        128\n   at ContinuousTests.Tests.TwoClientTest.<>c__DisplayClass11_0.<DownloadTestFile>b__0()
+        in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        43\n   at ContinuousTests.Tests.TwoClientTest.LogBytesPerMillisecond(Action
+        action) in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        82\n   at ContinuousTests.Tests.TwoClientTest.DownloadTestFile() in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        43\n   at InvokeStub_TwoClientTest.DownloadTestFile(Object, Object, IntPtr*)\n   at
+        System.Reflection.MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags
+        invokeAttr)\n   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj,
+        BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)\n   at
+        ContinuousTests.TestHandle.InvokeMoment(Int32 currentMoment, Action`1 beforeInvoke)
+        in /cs-codex-dist-tests/Tests/CodexContinuousTests/TestHandle.cs:line 47\n   at
+        ContinuousTests.SingleTestRun.RunMoment(Int32 t) in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        251\n   at ContinuousTests.SingleTestRun.RunTestMoments() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        150\n   at ContinuousTests.SingleTestRun.RunTest(Action`1 resultHandler) in
+        /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line 76\n   at
+        ContinuousTests.SingleTestRun.<>c__DisplayClass13_0.<Run>b__0() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        53\n   at Utils.TaskFactory.CatchException(Action action, String name) in
+        /cs-codex-dist-tests/Framework/Utils/TaskFactory.cs:line 20\n   at Utils.TaskFactory.<>c__DisplayClass2_0.<Run>b__0()
+        in /cs-codex-dist-tests/Framework/Utils/TaskFactory.cs:line 12\n   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread
+        threadPoolThread, ExecutionContext executionContext, ContextCallback callback,
+        Object state)\n   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task&
+        currentTaskSlot, Thread threadPoolThread)\n   at System.Threading.ThreadPoolWorkQueue.Dispatch()\n   at
+        System.Threading.PortableThreadPool.WorkerThread.WorkerThreadStart()\n---
+        End of stack trace from previous location ---\n\n   --- End of inner exception
+        stack trace ---\n   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean
+        includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.Wait(Int32
+        millisecondsTimeout, CancellationToken cancellationToken)\n   at System.Threading.Tasks.Task.Wait()\n   at
+        Utils.Time.Wait[T](Task`1 task) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line
+        12\n   at Core.Http.<>c__DisplayClass15_0.<HttpGetStream>b__0() in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        125\n   at Utils.Time.Retry[T](Func`1 action, Int32 maxRetries, TimeSpan retryTime,
+        String description) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line 144\n   ---
+        End of inner exception stack trace ---\n ---> (Inner Exception #1) System.AggregateException:
+        One or more errors occurred. (A task was canceled.)\n ---> System.Threading.Tasks.TaskCanceledException:
+        A task was canceled.\n   at System.Threading.Tasks.Task.GetExceptions(Boolean
+        includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean
+        includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.Wait(Int32
+        millisecondsTimeout, CancellationToken cancellationToken)\n   at System.Threading.Tasks.Task.Wait()\n   at
+        Utils.Time.Wait[T](Task`1 task) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line
+        12\n   at Core.Http.<>c__DisplayClass15_0.<HttpGetStream>b__0() in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        125\n   at Utils.Time.Retry[T](Func`1 action, Int32 maxRetries, TimeSpan retryTime,
+        String description) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line 144\n   at
+        Core.Http.LockRetry[T](Func`1 operation, String description) in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        212\n   at Core.Http.HttpGetStream(String route) in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        120\n   at CodexPlugin.CodexAccess.DownloadFile(String contentId) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexAccess.cs:line
+        71\n   at CodexPlugin.CodexNode.DownloadToFile(String contentId, TrackedFile
+        file) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line
+        200\n   at CodexPlugin.CodexNode.<>c__DisplayClass35_0.<DownloadContent>b__0()
+        in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line 128\n   at
+        Logging.Stopwatch.Measure(ILog log, String name, Action action, Boolean debug)
+        in /cs-codex-dist-tests/Framework/Logging/Stopwatch.cs:line 22\n   at CodexPlugin.CodexNode.DownloadContent(ContentId
+        contentId, String fileLabel) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line
+        128\n   at ContinuousTests.Tests.TwoClientTest.<>c__DisplayClass11_0.<DownloadTestFile>b__0()
+        in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        43\n   at ContinuousTests.Tests.TwoClientTest.LogBytesPerMillisecond(Action
+        action) in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        82\n   at ContinuousTests.Tests.TwoClientTest.DownloadTestFile() in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        43\n   at InvokeStub_TwoClientTest.DownloadTestFile(Object, Object, IntPtr*)\n   at
+        System.Reflection.MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags
+        invokeAttr)\n   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj,
+        BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)\n   at
+        ContinuousTests.TestHandle.InvokeMoment(Int32 currentMoment, Action`1 beforeInvoke)
+        in /cs-codex-dist-tests/Tests/CodexContinuousTests/TestHandle.cs:line 47\n   at
+        ContinuousTests.SingleTestRun.RunMoment(Int32 t) in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        251\n   at ContinuousTests.SingleTestRun.RunTestMoments() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        150\n   at ContinuousTests.SingleTestRun.RunTest(Action`1 resultHandler) in
+        /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line 76\n   at
+        ContinuousTests.SingleTestRun.<>c__DisplayClass13_0.<Run>b__0() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        53\n   at Utils.TaskFactory.CatchException(Action action, String name) in
+        /cs-codex-dist-tests/Framework/Utils/TaskFactory.cs:line 20\n   at Utils.TaskFactory.<>c__DisplayClass2_0.<Run>b__0()
+        in /cs-codex-dist-tests/Framework/Utils/TaskFactory.cs:line 12\n   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread
+        threadPoolThread, ExecutionContext executionContext, ContextCallback callback,
+        Object state)\n   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task&
+        currentTaskSlot, Thread threadPoolThread)\n   at System.Threading.ThreadPoolWorkQueue.Dispatch()\n   at
+        System.Threading.PortableThreadPool.WorkerThread.WorkerThreadStart()\n---
+        End of stack trace from previous location ---\n\n   --- End of inner exception
+        stack trace ---\n   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean
+        includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.Wait(Int32
+        millisecondsTimeout, CancellationToken cancellationToken)\n   at System.Threading.Tasks.Task.Wait()\n   at
+        Utils.Time.Wait[T](Task`1 task) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line
+        12\n   at Core.Http.<>c__DisplayClass15_0.<HttpGetStream>b__0() in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        125\n   at Utils.Time.Retry[T](Func`1 action, Int32 maxRetries, TimeSpan retryTime,
+        String description) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line 144<---\n\n
+        ---> (Inner Exception #2) System.AggregateException: One or more errors occurred.
+        (A task was canceled.)\n ---> System.Threading.Tasks.TaskCanceledException:
+        A task was canceled.\n   at System.Threading.Tasks.Task.GetExceptions(Boolean
+        includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean
+        includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.Wait(Int32
+        millisecondsTimeout, CancellationToken cancellationToken)\n   at System.Threading.Tasks.Task.Wait()\n   at
+        Utils.Time.Wait[T](Task`1 task) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line
+        12\n   at Core.Http.<>c__DisplayClass15_0.<HttpGetStream>b__0() in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        125\n   at Utils.Time.Retry[T](Func`1 action, Int32 maxRetries, TimeSpan retryTime,
+        String description) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line 144\n   at
+        Core.Http.LockRetry[T](Func`1 operation, String description) in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        212\n   at Core.Http.HttpGetStream(String route) in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        120\n   at CodexPlugin.CodexAccess.DownloadFile(String contentId) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexAccess.cs:line
+        71\n   at CodexPlugin.CodexNode.DownloadToFile(String contentId, TrackedFile
+        file) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line
+        200\n   at CodexPlugin.CodexNode.<>c__DisplayClass35_0.<DownloadContent>b__0()
+        in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line 128\n   at
+        Logging.Stopwatch.Measure(ILog log, String name, Action action, Boolean debug)
+        in /cs-codex-dist-tests/Framework/Logging/Stopwatch.cs:line 22\n   at CodexPlugin.CodexNode.DownloadContent(ContentId
+        contentId, String fileLabel) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line
+        128\n   at ContinuousTests.Tests.TwoClientTest.<>c__DisplayClass11_0.<DownloadTestFile>b__0()
+        in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        43\n   at ContinuousTests.Tests.TwoClientTest.LogBytesPerMillisecond(Action
+        action) in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        82\n   at ContinuousTests.Tests.TwoClientTest.DownloadTestFile() in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        43\n   at InvokeStub_TwoClientTest.DownloadTestFile(Object, Object, IntPtr*)\n   at
+        System.Reflection.MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags
+        invokeAttr)\n   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj,
+        BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)\n   at
+        ContinuousTests.TestHandle.InvokeMoment(Int32 currentMoment, Action`1 beforeInvoke)
+        in /cs-codex-dist-tests/Tests/CodexContinuousTests/TestHandle.cs:line 47\n   at
+        ContinuousTests.SingleTestRun.RunMoment(Int32 t) in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        251\n   at ContinuousTests.SingleTestRun.RunTestMoments() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        150\n   at ContinuousTests.SingleTestRun.RunTest(Action`1 resultHandler) in
+        /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line 76\n   at
+        ContinuousTests.SingleTestRun.<>c__DisplayClass13_0.<Run>b__0() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        53\n   at Utils.TaskFactory.CatchException(Action action, String name) in
+        /cs-codex-dist-tests/Framework/Utils/TaskFactory.cs:line 20\n   at Utils.TaskFactory.<>c__DisplayClass2_0.<Run>b__0()
+        in /cs-codex-dist-tests/Framework/Utils/TaskFactory.cs:line 12\n   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread
+        threadPoolThread, ExecutionContext executionContext, ContextCallback callback,
+        Object state)\n   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task&
+        currentTaskSlot, Thread threadPoolThread)\n   at System.Threading.ThreadPoolWorkQueue.Dispatch()\n   at
+        System.Threading.PortableThreadPool.WorkerThread.WorkerThreadStart()\n---
+        End of stack trace from previous location ---\n\n   --- End of inner exception
+        stack trace ---\n   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean
+        includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.Wait(Int32
+        millisecondsTimeout, CancellationToken cancellationToken)\n   at System.Threading.Tasks.Task.Wait()\n   at
+        Utils.Time.Wait[T](Task`1 task) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line
+        12\n   at Core.Http.<>c__DisplayClass15_0.<HttpGetStream>b__0() in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        125\n   at Utils.Time.Retry[T](Func`1 action, Int32 maxRetries, TimeSpan retryTime,
+        String description) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line 144<---\n\n
+        ---> (Inner Exception #3) System.AggregateException: One or more errors occurred.
+        (Connection refused (codex2-4-8-int.two-client-test-bugfix.svc.cluster.local:30007))\n
+        ---> System.Net.Http.HttpRequestException: Connection refused (codex2-4-8-int.two-client-test-bugfix.svc.cluster.local:30007)\n
+        ---> System.Net.Sockets.SocketException (111): Connection refused\n   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError
+        error, CancellationToken cancellationToken)\n   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16
+        token)\n   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|281_0(AwaitableSocketAsyncEventArgs
+        saea, ValueTask connectTask, CancellationToken cancellationToken)\n   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String
+        host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken
+        cancellationToken)\n   --- End of inner exception stack trace ---\n   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String
+        host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken
+        cancellationToken)\n   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage
+        request, Boolean async, CancellationToken cancellationToken)\n   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage
+        request, Boolean async, CancellationToken cancellationToken)\n   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem
+        queueItem)\n   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken
+        cancellationToken)\n   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionAsync(Boolean
+        async, CancellationToken requestCancellationToken)\n   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage
+        request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)\n   at
+        System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean
+        async, CancellationToken cancellationToken)\n   at System.Net.Http.HttpClient.GetStreamAsyncCore(HttpRequestMessage
+        request, CancellationToken cancellationToken)\n   --- End of inner exception
+        stack trace ---\n   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean
+        includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.Wait(Int32
+        millisecondsTimeout, CancellationToken cancellationToken)\n   at System.Threading.Tasks.Task.Wait()\n   at
+        Utils.Time.Wait[T](Task`1 task) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line
+        12\n   at Core.Http.<>c__DisplayClass15_0.<HttpGetStream>b__0() in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        125\n   at Utils.Time.Retry[T](Func`1 action, Int32 maxRetries, TimeSpan retryTime,
+        String description) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line 144<---\n\n   ---
+        End of inner exception stack trace ---\n   at Utils.Time.Retry[T](Func`1 action,
+        Int32 maxRetries, TimeSpan retryTime, String description) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line
+        139\n   at Core.Http.LockRetry[T](Func`1 operation, String description) in
+        /cs-codex-dist-tests/Framework/Core/Http.cs:line 212\n   at Core.Http.HttpGetStream(String
+        route) in /cs-codex-dist-tests/Framework/Core/Http.cs:line 120\n   at CodexPlugin.CodexAccess.DownloadFile(String
+        contentId) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexAccess.cs:line
+        71\n   at CodexPlugin.CodexNode.DownloadToFile(String contentId, TrackedFile
+        file) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line
+        200\n   at CodexPlugin.CodexNode.<>c__DisplayClass35_0.<DownloadContent>b__0()
+        in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line 128\n   at
+        Logging.Stopwatch.Measure(ILog log, String name, Action action, Boolean debug)
+        in /cs-codex-dist-tests/Framework/Logging/Stopwatch.cs:line 22\n   at CodexPlugin.CodexNode.DownloadContent(ContentId
+        contentId, String fileLabel) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line
+        128\n   at ContinuousTests.Tests.TwoClientTest.<>c__DisplayClass11_0.<DownloadTestFile>b__0()
+        in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        43\n   at ContinuousTests.Tests.TwoClientTest.LogBytesPerMillisecond(Action
+        action) in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        82\n   at ContinuousTests.Tests.TwoClientTest.DownloadTestFile() in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        43\n   at InvokeStub_TwoClientTest.DownloadTestFile(Object, Object, IntPtr*)\n   at
+        System.Reflection.MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags
+        invokeAttr)\n   at ContinuousTests.SingleTestRun.ThrowFailTest() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        186\n   at ContinuousTests.SingleTestRun.RunTestMoments() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        155\n   at ContinuousTests.SingleTestRun.RunTest(Action`1 resultHandler) in
+        /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line 76","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Failed","testduration":"0","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T02:39:36.3628478Z","testtype":"continuous-tests"},"sort":[1707447057112]},{"_index":"continuous-tests-status-2024.02.09","_id":"2kK8i40BTe2pYqi1TCe9","_score":null,"_source":{"@timestamp":"2024-02-09T02:39:35.3438349Z","avgdownload":"256.2KB/s","avgupload":"2.8MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex2-4-8574cf7cdf-z75qr,codex1-3-6c565dbd66-wxg49","involvedpods":"<CODEX24>,<CODEX13>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"359.6048988","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T02:33:34.4148771Z","testtype":"continuous-tests"},"sort":[1707446375343]},{"_index":"continuous-tests-status-2024.02.09","_id":"whi2i40BTe2pYqi1YjlT","_score":null,"_source":{"@timestamp":"2024-02-09T02:33:09.0451640Z","avgdownload":"1.3MB/s","avgupload":"3.4MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"bootstrap-2-75ffd985d5-sqhj5,codex2-4-8574cf7cdf-z75qr","involvedpods":"<BOOTSTRAP2>,<CODEX24>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"96.8061761","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T02:31:32.1710673Z","testtype":"continuous-tests"},"sort":[1707445989045]},{"_index":"continuous-tests-status-2024.02.09","_id":"hxG0i40BTe2pYqi1iQOd","_score":null,"_source":{"@timestamp":"2024-02-09T02:31:07.9217679Z","avgdownload":"1.3MB/s","avgupload":"3.3MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"bootstrap-2-75ffd985d5-sqhj5,codex2-4-8574cf7cdf-z75qr","involvedpods":"<BOOTSTRAP2>,<CODEX24>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"96.8828193","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T02:29:30.9078520Z","testtype":"continuous-tests"},"sort":[1707445867921]},{"_index":"continuous-tests-status-2024.02.09","_id":"Bwuzi40BTe2pYqi1AMbu","_score":null,"_source":{"@timestamp":"2024-02-09T02:29:30.5454807Z","avgdownload":"269KB/s","avgupload":"3.1MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex2-4-8574cf7cdf-z75qr,codex1-3-6c565dbd66-wxg49","involvedpods":"<CODEX24>,<CODEX13>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"341.5041775","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T02:23:48.7157750Z","testtype":"continuous-tests"},"sort":[1707445770545]},{"_index":"continuous-tests-status-2024.02.09","_id":"gOeti40BTe2pYqi1tvXZ","_score":null,"_source":{"@timestamp":"2024-02-09T02:23:48.6094254Z","avgdownload":"162.7KB/s","avgupload":"1.9MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"bootstrap-2-75ffd985d5-sqhj5,codex1-3-6c565dbd66-wxg49","involvedpods":"<BOOTSTRAP2>,<CODEX13>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"557.2236422","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T02:14:31.1903255Z","testtype":"continuous-tests"},"sort":[1707445428609]},{"_index":"continuous-tests-status-2024.02.09","_id":"e8qli40BTe2pYqi1I_Ft","_score":null,"_source":{"@timestamp":"2024-02-09T02:14:22.5773204Z","avgdownload":"1MB/s","avgupload":"3.5MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex2-4-8574cf7cdf-z75qr,codex1-3-6c565dbd66-wxg49","involvedpods":"<CODEX24>,<CODEX13>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"111.0135953","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T02:12:30.6830329Z","testtype":"continuous-tests"},"sort":[1707444862577]},{"_index":"continuous-tests-status-2024.02.09","_id":"asWji40BTe2pYqi1crWx","_score":null,"_source":{"@timestamp":"2024-02-09T02:12:30.5381635Z","avgdownload":"178.9KB/s","avgupload":"2.5MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex2-4-8574cf7cdf-z75qr,bootstrap-2-75ffd985d5-sqhj5","involvedpods":"<CODEX24>,<BOOTSTRAP2>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"500.7759314","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T02:04:08.8279712Z","testtype":"continuous-tests"},"sort":[1707444750538]},{"_index":"continuous-tests-status-2024.02.09","_id":"raObi40BTe2pYqi1z-TG","_score":null,"_source":{"@timestamp":"2024-02-09T02:04:08.3364074Z","avgdownload":"946.6KB/s","avgupload":"2.8MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex1-3-6c565dbd66-wxg49,codex2-4-8574cf7cdf-z75qr","involvedpods":"<CODEX13>,<CODEX24>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"126.9885631","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T02:02:00.3407869Z","testtype":"continuous-tests"},"sort":[1707444248336]},{"_index":"continuous-tests-status-2024.02.09","_id":"FZ2Zi40BTe2pYqi1frDK","_score":null,"_source":{"@timestamp":"2024-02-09T02:01:37.7637436Z","avgdownload":"1.5MB/s","avgupload":"2.2MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"bootstrap-2-75ffd985d5-sqhj5,codex1-3-6c565dbd66-wxg49","involvedpods":"<BOOTSTRAP2>,<CODEX13>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"99.1548459","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T01:59:58.3757751Z","testtype":"continuous-tests"},"sort":[1707444097763]},{"_index":"continuous-tests-status-2024.02.09","_id":"opyXi40BTe2pYqi19gsc","_score":null,"_source":{"@timestamp":"2024-02-09T01:59:58.2293689Z","avgdownload":"401.6KB/s","avgupload":"2.7MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex2-4-8574cf7cdf-z75qr,bootstrap-2-75ffd985d5-sqhj5","involvedpods":"<CODEX24>,<BOOTSTRAP2>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"243.781886","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T01:55:54.2988812Z","testtype":"continuous-tests"},"sort":[1707443998229]},{"_index":"continuous-tests-status-2024.02.09","_id":"mI2Ui40BTe2pYqi1PHKr","_score":null,"_source":{"@timestamp":"2024-02-09T01:55:54.1614958Z","avgdownload":"253.7KB/s","avgupload":"3.1MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"bootstrap-2-75ffd985d5-sqhj5,codex2-4-8574cf7cdf-z75qr","involvedpods":"<BOOTSTRAP2>,<CODEX24>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"359.2512348","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T01:49:54.7221153Z","testtype":"continuous-tests"},"sort":[1707443754161]},{"_index":"continuous-tests-status-2024.02.09","_id":"Vn-Oi40BTe2pYqi1yiqP","_score":null,"_source":{"@timestamp":"2024-02-09T01:49:54.5796167Z","avgdownload":"261.5KB/s","avgupload":"3.2MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"bootstrap-2-75ffd985d5-sqhj5,codex2-4-8574cf7cdf-z75qr","involvedpods":"<BOOTSTRAP2>,<CODEX24>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"348.605598","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T01:44:04.8100487Z","testtype":"continuous-tests"},"sort":[1707443394579]},{"_index":"continuous-tests-status-2024.02.09","_id":"uXCJi40BTe2pYqi1WNZx","_score":null,"_source":{"@timestamp":"2024-02-09T01:44:04.6467851Z","avgdownload":"266.1KB/s","avgupload":"3.5MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"bootstrap-2-75ffd985d5-sqhj5,codex2-4-8574cf7cdf-z75qr","involvedpods":"<BOOTSTRAP2>,<CODEX24>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"341.4922571","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T01:38:22.8681695Z","testtype":"continuous-tests"},"sort":[1707443044646]},{"_index":"continuous-tests-status-2024.02.09","_id":"gmKEi40BTe2pYqi1NrBj","_score":null,"_source":{"@timestamp":"2024-02-09T01:38:22.7260996Z","avgdownload":"123.3KB/s","avgupload":"2.6MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex1-3-6c565dbd66-wxg49,bootstrap-2-75ffd985d5-sqhj5","involvedpods":"<CODEX13>,<BOOTSTRAP2>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"706.387862","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T01:26:36.1018643Z","testtype":"continuous-tests"},"sort":[1707442702726]},{"_index":"continuous-tests-status-2024.02.09","_id":"NzJ5i40BTe2pYqi1cnIN","_score":null,"_source":{"@timestamp":"2024-02-09T01:26:35.3277906Z","avgdownload":"164.2KB/s","avgupload":"1.6MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"bootstrap-2-75ffd985d5-sqhj5,codex1-3-6c565dbd66-wxg49","involvedpods":"<BOOTSTRAP2>,<CODEX13>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"560.0208629","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T01:17:15.1002846Z","testtype":"continuous-tests"},"sort":[1707441995327]},{"_index":"continuous-tests-status-2024.02.09","_id":"5hNwi40BTe2pYqi1jvqY","_score":null,"_source":{"@timestamp":"2024-02-09T01:16:53.0197926Z","avgdownload":"1.4MB/s","avgupload":"2.9MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex1-3-6c565dbd66-wxg49,codex2-4-8574cf7cdf-z75qr","involvedpods":"<CODEX13>,<CODEX24>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"98.2070831","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T01:15:14.6413418Z","testtype":"continuous-tests"},"sort":[1707441413019]},{"_index":"continuous-tests-status-2024.02.09","_id":"mw5vi40BTe2pYqi1BdX1","_score":null,"_source":{"@timestamp":"2024-02-09T01:15:13.6615610Z","avgdownload":"974.1KB/s","avgupload":"3MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex2-4-8574cf7cdf-z75qr,codex1-3-6c565dbd66-wxg49","involvedpods":"<CODEX24>,<CODEX13>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"121.6786638","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T01:13:11.3503970Z","testtype":"continuous-tests"},"sort":[1707441313661]},{"_index":"continuous-tests-status-2024.02.09","_id":"IQVsi40BTe2pYqi1tVgH","_score":null,"_source":{"@timestamp":"2024-02-09T01:12:43.7054660Z","avgdownload":"1.4MB/s","avgupload":"3.4MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex2-4-8574cf7cdf-z75qr,bootstrap-2-75ffd985d5-sqhj5","involvedpods":"<CODEX24>,<BOOTSTRAP2>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"92.7327451","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T01:11:10.7657168Z","testtype":"continuous-tests"},"sort":[1707441163705]},{"_index":"continuous-tests-status-2024.02.09","_id":"vP5qi40BTe2pYqi13EtB","_score":null,"_source":{"@timestamp":"2024-02-09T01:10:47.1447941Z","avgdownload":"1.2MB/s","avgupload":"3.7MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex2-4-8574cf7cdf-z75qr,bootstrap-2-75ffd985d5-sqhj5","involvedpods":"<CODEX24>,<BOOTSTRAP2>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"96.5233032","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T01:09:10.4700702Z","testtype":"continuous-tests"},"sort":[1707441047144]},{"_index":"continuous-tests-status-2024.02.09","_id":"hPhoi40BTe2pYqi12457","_score":null,"_source":{"@timestamp":"2024-02-09T01:08:29.9796036Z","avgdownload":"1.7MB/s","avgupload":"3.6MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"bootstrap-2-75ffd985d5-sqhj5,codex1-3-6c565dbd66-wxg49","involvedpods":"<BOOTSTRAP2>,<CODEX13>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"79.6486139","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T01:07:10.2687863Z","testtype":"continuous-tests"},"sort":[1707440909979]},{"_index":"continuous-tests-status-2024.02.09","_id":"bkxNi40BTe2pYqi1ySlQ","_score":null,"_ignored":["message.keyword"],"_source":{"@timestamp":"2024-02-09T00:38:55.2482106Z","avgdownload":"102.8KB/s","avgupload":"183.8KB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":" Files are not of equal length.","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex1-3-6c565dbd66-wxg49,bootstrap-2-75ffd985d5-sqhj5","involvedpods":"<CODEX13>,<BOOTSTRAP2>","message":"System.Exception:
+        System.Exception: Files are not of equal length.\n   at Utils.FrameworkAssert.Fail(String
+        message) in /cs-codex-dist-tests/Framework/Utils/FrameworkAssert.cs:line 12\n   at
+        Utils.FrameworkAssert.That(Boolean condition, String message) in /cs-codex-dist-tests/Framework/Utils/FrameworkAssert.cs:line
+        7\n   at FileUtils.TrackedFile.AssertEqual(TrackedFile actual) in /cs-codex-dist-tests/Framework/FileUtils/TrackedFile.cs:line
+        50\n   at FileUtils.TrackedFile.AssertIsEqual(TrackedFile actual) in /cs-codex-dist-tests/Framework/FileUtils/TrackedFile.cs:line
+        25\n   at ContinuousTests.Tests.TwoClientTest.DownloadTestFile() in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        45\n   at InvokeStub_TwoClientTest.DownloadTestFile(Object, Object, IntPtr*)\n   at
+        System.Reflection.MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags
+        invokeAttr)\n   at ContinuousTests.SingleTestRun.ThrowFailTest() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        186\n   at ContinuousTests.SingleTestRun.RunTestMoments() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        155\n   at ContinuousTests.SingleTestRun.RunTest(Action`1 resultHandler) in
+        /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line 76","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Failed","testduration":"0","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T00:21:16.3722732Z","testtype":"continuous-tests"},"sort":[1707439135248]},{"_index":"continuous-tests-status-2024.02.09","_id":"5PM9i40BTe2pYqi1O3cN","_score":null,"_source":{"@timestamp":"2024-02-09T00:20:47.6786305Z","avgdownload":"1.2MB/s","avgupload":"4.5MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"bootstrap-2-75ffd985d5-sqhj5,codex2-4-8574cf7cdf-z75qr","involvedpods":"<BOOTSTRAP2>,<CODEX24>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"93.0074501","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T00:19:13.8494435Z","testtype":"continuous-tests"},"sort":[1707438047678]},{"_index":"continuous-tests-status-2024.02.09","_id":"MeY7i40BTe2pYqi1OoY4","_score":null,"_source":{"@timestamp":"2024-02-09T00:18:39.0955867Z","avgdownload":"1.4MB/s","avgupload":"4.7MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"bootstrap-2-75ffd985d5-sqhj5,codex2-4-8574cf7cdf-z75qr","involvedpods":"<BOOTSTRAP2>,<CODEX24>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"85.3273743","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T00:17:13.6107407Z","testtype":"continuous-tests"},"sort":[1707437919095]},{"_index":"continuous-tests-status-2024.02.09","_id":"H9s5i40BTe2pYqi1iUKK","_score":null,"_source":{"@timestamp":"2024-02-09T00:16:46.5056103Z","avgdownload":"1.3MB/s","avgupload":"4MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"bootstrap-2-75ffd985d5-sqhj5,codex2-4-8574cf7cdf-z75qr","involvedpods":"<BOOTSTRAP2>,<CODEX24>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"92.9521056","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T00:15:13.4020376Z","testtype":"continuous-tests"},"sort":[1707437806505]},{"_index":"continuous-tests-status-2024.02.09","_id":"q843i40BTe2pYqi1iMy3","_score":null,"_source":{"@timestamp":"2024-02-09T00:14:41.6775479Z","avgdownload":"1.6MB/s","avgupload":"3MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex2-4-8574cf7cdf-z75qr,bootstrap-2-75ffd985d5-sqhj5","involvedpods":"<CODEX24>,<BOOTSTRAP2>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"87.2883544","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T00:13:13.1406982Z","testtype":"continuous-tests"},"sort":[1707437681677]},{"_index":"continuous-tests-status-2024.02.09","_id":"fsM1i40BTe2pYqi12HAN","_score":null,"_source":{"@timestamp":"2024-02-09T00:12:45.6542416Z","avgdownload":"1.6MB/s","avgupload":"2.6MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex2-4-8574cf7cdf-z75qr,bootstrap-2-75ffd985d5-sqhj5","involvedpods":"<CODEX24>,<BOOTSTRAP2>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"92.6290863","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T00:11:12.0214014Z","testtype":"continuous-tests"},"sort":[1707437565654]},{"_index":"continuous-tests-status-2024.02.09","_id":"Frczi40BTe2pYqi110M6","_score":null,"_source":{"@timestamp":"2024-02-09T00:10:38.4737224Z","avgdownload":"1.5MB/s","avgupload":"3.3MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex2-4-8574cf7cdf-z75qr,bootstrap-2-75ffd985d5-sqhj5","involvedpods":"<CODEX24>,<BOOTSTRAP2>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"87.3304779","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T00:09:10.0724205Z","testtype":"continuous-tests"},"sort":[1707437438473]},{"_index":"continuous-tests-status-2024.02.09","_id":"_asxi40BTe2pYqi1_n2A","_score":null,"_source":{"@timestamp":"2024-02-09T00:08:36.9681383Z","avgdownload":"1.5MB/s","avgupload":"3.7MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex2-4-8574cf7cdf-z75qr,bootstrap-2-75ffd985d5-sqhj5","involvedpods":"<CODEX24>,<BOOTSTRAP2>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"86.9807732","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T00:07:09.8662651Z","testtype":"continuous-tests"},"sort":[1707437316968]},{"_index":"continuous-tests-status-2024.02.09","_id":"cKUwi40BTe2pYqi1TSbm","_score":null,"_source":{"@timestamp":"2024-02-09T00:06:43.4260776Z","avgdownload":"1.3MB/s","avgupload":"3.8MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"bootstrap-2-75ffd985d5-sqhj5,codex1-3-6c565dbd66-wxg49","involvedpods":"<BOOTSTRAP2>,<CODEX13>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"93.6334484","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T00:05:09.6457592Z","testtype":"continuous-tests"},"sort":[1707437203426]},{"_index":"continuous-tests-status-2024.02.09","_id":"Np8ui40BTe2pYqi1TUoR","_score":null,"_source":{"@timestamp":"2024-02-09T00:04:35.2840789Z","avgdownload":"1.4MB/s","avgupload":"3.9MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex2-4-8574cf7cdf-z75qr,bootstrap-2-75ffd985d5-sqhj5","involvedpods":"<CODEX24>,<BOOTSTRAP2>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"89.4060258","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T00:03:05.7770281Z","testtype":"continuous-tests"},"sort":[1707437075284]},{"_index":"continuous-tests-status-2024.02.09","_id":"Rpksi40BTe2pYqi1dNBb","_score":null,"_source":{"@timestamp":"2024-02-09T00:02:34.8625857Z","avgdownload":"1.4MB/s","avgupload":"3.6MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex1-3-6c565dbd66-wxg49,bootstrap-2-75ffd985d5-sqhj5","involvedpods":"<CODEX13>,<BOOTSTRAP2>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"89.1817581","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T00:01:05.5565001Z","testtype":"continuous-tests"},"sort":[1707436954862]},{"_index":"continuous-tests-status-2024.02.09","_id":"Gpgqi40BTe2pYqi1dDfH","_score":null,"_source":{"@timestamp":"2024-02-09T00:00:20.1776933Z","avgdownload":"1.7MB/s","avgupload":"4.3MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex1-3-6c565dbd66-wxg49,codex2-4-8574cf7cdf-z75qr","involvedpods":"<CODEX13>,<CODEX24>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"76.6647678","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-08T23:59:03.4014925Z","testtype":"continuous-tests"},"sort":[1707436820177]},{"_index":"continuous-tests-status-2024.02.08","_id":"AJYoi40BTe2pYqi1Sp2i","_score":null,"_source":{"@timestamp":"2024-02-08T23:58:04.4611449Z","avgdownload":"2.4MB/s","avgupload":"4.2MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":"OK","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex1-3-6c565dbd66-wxg49,codex2-4-8574cf7cdf-z75qr","involvedpods":"<CODEX13>,<CODEX24>","message":"OK","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Passed","testduration":"63.1647726","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-08T23:57:01.2110588Z","testtype":"continuous-tests"},"sort":[1707436684461]}]}}'
+    headers:
+      Transfer-Encoding:
+      - chunked
+      X-elastic-product:
+      - Elasticsearch
+      content-type:
+      - application/vnd.elasticsearch+json;compatible-with=8
+    status:
+      code: 200
+      message: OK
+version: 1

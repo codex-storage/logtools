@@ -1,0 +1,294 @@
+interactions:
+- request:
+    body: '{"query":{"bool":{"filter":[{"term":{"runid.keyword":"20240208-115030"}},{"term":{"status.keyword":"Failed"}}]}},"size":10000,"sort":[{"@timestamp":"desc"}]}'
+    headers:
+      accept:
+      - application/vnd.elasticsearch+json; compatible-with=8
+      connection:
+      - keep-alive
+      content-type:
+      - application/vnd.elasticsearch+json; compatible-with=8
+      user-agent:
+      - elasticsearch-py/8.10.1 (Python/3.11.5; elastic-transport/8.10.0)
+      x-elastic-client-meta:
+      - es=8.10.1,py=3.11.5,t=8.10.0,ur=2.0.7
+    method: POST
+    uri: http://localhost:9200/continuous-tests-status-*/_search
+  response:
+    body:
+      string: '{"took":5,"timed_out":false,"_shards":{"total":25,"successful":25,"skipped":0,"failed":0},"hits":{"total":{"value":2,"relation":"eq"},"max_score":null,"hits":[{"_index":"continuous-tests-status-2024.02.09","_id":"VEbGi40BTe2pYqi1mE3V","_score":null,"_ignored":["message.keyword"],"_source":{"@timestamp":"2024-02-09T02:50:57.1125777Z","avgupload":"1.2MB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":" data/zDvZRwzkz4EQMAECwa519qerKWmxMfeEgy4hneFg3Yr1xZZ7jHBU/network''
+        timed out after 3 tries over 10 mins, 1 secs.","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"bootstrap-2-75ffd985d5-sqhj5,codex2-4-8574cf7cdf-z75qr","involvedpods":"<BOOTSTRAP2>,<CODEX24>","message":"System.Exception:
+        System.TimeoutException: Retry ''HTTP-GET-STREAM: data/zDvZRwzkz4EQMAECwa519qerKWmxMfeEgy4hneFg3Yr1xZZ7jHBU/network''
+        timed out after 3 tries over 10 mins, 1 secs.\n ---> System.AggregateException:
+        One or more errors occurred. (One or more errors occurred. (A task was canceled.))
+        (One or more errors occurred. (A task was canceled.)) (One or more errors
+        occurred. (A task was canceled.)) (One or more errors occurred. (Connection
+        refused (codex2-4-8-int.two-client-test-bugfix.svc.cluster.local:30007)))\n
+        ---> System.AggregateException: One or more errors occurred. (A task was canceled.)\n
+        ---> System.Threading.Tasks.TaskCanceledException: A task was canceled.\n   at
+        System.Threading.Tasks.Task.GetExceptions(Boolean includeTaskCanceledExceptions)\n   at
+        System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)\n   at
+        System.Threading.Tasks.Task.Wait(Int32 millisecondsTimeout, CancellationToken
+        cancellationToken)\n   at System.Threading.Tasks.Task.Wait()\n   at Utils.Time.Wait[T](Task`1
+        task) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line 12\n   at Core.Http.<>c__DisplayClass15_0.<HttpGetStream>b__0()
+        in /cs-codex-dist-tests/Framework/Core/Http.cs:line 125\n   at Utils.Time.Retry[T](Func`1
+        action, Int32 maxRetries, TimeSpan retryTime, String description) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line
+        144\n   at Core.Http.LockRetry[T](Func`1 operation, String description) in
+        /cs-codex-dist-tests/Framework/Core/Http.cs:line 212\n   at Core.Http.HttpGetStream(String
+        route) in /cs-codex-dist-tests/Framework/Core/Http.cs:line 120\n   at CodexPlugin.CodexAccess.DownloadFile(String
+        contentId) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexAccess.cs:line
+        71\n   at CodexPlugin.CodexNode.DownloadToFile(String contentId, TrackedFile
+        file) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line
+        200\n   at CodexPlugin.CodexNode.<>c__DisplayClass35_0.<DownloadContent>b__0()
+        in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line 128\n   at
+        Logging.Stopwatch.Measure(ILog log, String name, Action action, Boolean debug)
+        in /cs-codex-dist-tests/Framework/Logging/Stopwatch.cs:line 22\n   at CodexPlugin.CodexNode.DownloadContent(ContentId
+        contentId, String fileLabel) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line
+        128\n   at ContinuousTests.Tests.TwoClientTest.<>c__DisplayClass11_0.<DownloadTestFile>b__0()
+        in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        43\n   at ContinuousTests.Tests.TwoClientTest.LogBytesPerMillisecond(Action
+        action) in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        82\n   at ContinuousTests.Tests.TwoClientTest.DownloadTestFile() in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        43\n   at InvokeStub_TwoClientTest.DownloadTestFile(Object, Object, IntPtr*)\n   at
+        System.Reflection.MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags
+        invokeAttr)\n   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj,
+        BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)\n   at
+        ContinuousTests.TestHandle.InvokeMoment(Int32 currentMoment, Action`1 beforeInvoke)
+        in /cs-codex-dist-tests/Tests/CodexContinuousTests/TestHandle.cs:line 47\n   at
+        ContinuousTests.SingleTestRun.RunMoment(Int32 t) in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        251\n   at ContinuousTests.SingleTestRun.RunTestMoments() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        150\n   at ContinuousTests.SingleTestRun.RunTest(Action`1 resultHandler) in
+        /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line 76\n   at
+        ContinuousTests.SingleTestRun.<>c__DisplayClass13_0.<Run>b__0() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        53\n   at Utils.TaskFactory.CatchException(Action action, String name) in
+        /cs-codex-dist-tests/Framework/Utils/TaskFactory.cs:line 20\n   at Utils.TaskFactory.<>c__DisplayClass2_0.<Run>b__0()
+        in /cs-codex-dist-tests/Framework/Utils/TaskFactory.cs:line 12\n   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread
+        threadPoolThread, ExecutionContext executionContext, ContextCallback callback,
+        Object state)\n   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task&
+        currentTaskSlot, Thread threadPoolThread)\n   at System.Threading.ThreadPoolWorkQueue.Dispatch()\n   at
+        System.Threading.PortableThreadPool.WorkerThread.WorkerThreadStart()\n---
+        End of stack trace from previous location ---\n\n   --- End of inner exception
+        stack trace ---\n   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean
+        includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.Wait(Int32
+        millisecondsTimeout, CancellationToken cancellationToken)\n   at System.Threading.Tasks.Task.Wait()\n   at
+        Utils.Time.Wait[T](Task`1 task) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line
+        12\n   at Core.Http.<>c__DisplayClass15_0.<HttpGetStream>b__0() in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        125\n   at Utils.Time.Retry[T](Func`1 action, Int32 maxRetries, TimeSpan retryTime,
+        String description) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line 144\n   ---
+        End of inner exception stack trace ---\n ---> (Inner Exception #1) System.AggregateException:
+        One or more errors occurred. (A task was canceled.)\n ---> System.Threading.Tasks.TaskCanceledException:
+        A task was canceled.\n   at System.Threading.Tasks.Task.GetExceptions(Boolean
+        includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean
+        includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.Wait(Int32
+        millisecondsTimeout, CancellationToken cancellationToken)\n   at System.Threading.Tasks.Task.Wait()\n   at
+        Utils.Time.Wait[T](Task`1 task) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line
+        12\n   at Core.Http.<>c__DisplayClass15_0.<HttpGetStream>b__0() in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        125\n   at Utils.Time.Retry[T](Func`1 action, Int32 maxRetries, TimeSpan retryTime,
+        String description) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line 144\n   at
+        Core.Http.LockRetry[T](Func`1 operation, String description) in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        212\n   at Core.Http.HttpGetStream(String route) in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        120\n   at CodexPlugin.CodexAccess.DownloadFile(String contentId) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexAccess.cs:line
+        71\n   at CodexPlugin.CodexNode.DownloadToFile(String contentId, TrackedFile
+        file) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line
+        200\n   at CodexPlugin.CodexNode.<>c__DisplayClass35_0.<DownloadContent>b__0()
+        in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line 128\n   at
+        Logging.Stopwatch.Measure(ILog log, String name, Action action, Boolean debug)
+        in /cs-codex-dist-tests/Framework/Logging/Stopwatch.cs:line 22\n   at CodexPlugin.CodexNode.DownloadContent(ContentId
+        contentId, String fileLabel) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line
+        128\n   at ContinuousTests.Tests.TwoClientTest.<>c__DisplayClass11_0.<DownloadTestFile>b__0()
+        in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        43\n   at ContinuousTests.Tests.TwoClientTest.LogBytesPerMillisecond(Action
+        action) in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        82\n   at ContinuousTests.Tests.TwoClientTest.DownloadTestFile() in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        43\n   at InvokeStub_TwoClientTest.DownloadTestFile(Object, Object, IntPtr*)\n   at
+        System.Reflection.MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags
+        invokeAttr)\n   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj,
+        BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)\n   at
+        ContinuousTests.TestHandle.InvokeMoment(Int32 currentMoment, Action`1 beforeInvoke)
+        in /cs-codex-dist-tests/Tests/CodexContinuousTests/TestHandle.cs:line 47\n   at
+        ContinuousTests.SingleTestRun.RunMoment(Int32 t) in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        251\n   at ContinuousTests.SingleTestRun.RunTestMoments() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        150\n   at ContinuousTests.SingleTestRun.RunTest(Action`1 resultHandler) in
+        /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line 76\n   at
+        ContinuousTests.SingleTestRun.<>c__DisplayClass13_0.<Run>b__0() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        53\n   at Utils.TaskFactory.CatchException(Action action, String name) in
+        /cs-codex-dist-tests/Framework/Utils/TaskFactory.cs:line 20\n   at Utils.TaskFactory.<>c__DisplayClass2_0.<Run>b__0()
+        in /cs-codex-dist-tests/Framework/Utils/TaskFactory.cs:line 12\n   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread
+        threadPoolThread, ExecutionContext executionContext, ContextCallback callback,
+        Object state)\n   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task&
+        currentTaskSlot, Thread threadPoolThread)\n   at System.Threading.ThreadPoolWorkQueue.Dispatch()\n   at
+        System.Threading.PortableThreadPool.WorkerThread.WorkerThreadStart()\n---
+        End of stack trace from previous location ---\n\n   --- End of inner exception
+        stack trace ---\n   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean
+        includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.Wait(Int32
+        millisecondsTimeout, CancellationToken cancellationToken)\n   at System.Threading.Tasks.Task.Wait()\n   at
+        Utils.Time.Wait[T](Task`1 task) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line
+        12\n   at Core.Http.<>c__DisplayClass15_0.<HttpGetStream>b__0() in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        125\n   at Utils.Time.Retry[T](Func`1 action, Int32 maxRetries, TimeSpan retryTime,
+        String description) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line 144<---\n\n
+        ---> (Inner Exception #2) System.AggregateException: One or more errors occurred.
+        (A task was canceled.)\n ---> System.Threading.Tasks.TaskCanceledException:
+        A task was canceled.\n   at System.Threading.Tasks.Task.GetExceptions(Boolean
+        includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean
+        includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.Wait(Int32
+        millisecondsTimeout, CancellationToken cancellationToken)\n   at System.Threading.Tasks.Task.Wait()\n   at
+        Utils.Time.Wait[T](Task`1 task) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line
+        12\n   at Core.Http.<>c__DisplayClass15_0.<HttpGetStream>b__0() in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        125\n   at Utils.Time.Retry[T](Func`1 action, Int32 maxRetries, TimeSpan retryTime,
+        String description) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line 144\n   at
+        Core.Http.LockRetry[T](Func`1 operation, String description) in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        212\n   at Core.Http.HttpGetStream(String route) in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        120\n   at CodexPlugin.CodexAccess.DownloadFile(String contentId) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexAccess.cs:line
+        71\n   at CodexPlugin.CodexNode.DownloadToFile(String contentId, TrackedFile
+        file) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line
+        200\n   at CodexPlugin.CodexNode.<>c__DisplayClass35_0.<DownloadContent>b__0()
+        in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line 128\n   at
+        Logging.Stopwatch.Measure(ILog log, String name, Action action, Boolean debug)
+        in /cs-codex-dist-tests/Framework/Logging/Stopwatch.cs:line 22\n   at CodexPlugin.CodexNode.DownloadContent(ContentId
+        contentId, String fileLabel) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line
+        128\n   at ContinuousTests.Tests.TwoClientTest.<>c__DisplayClass11_0.<DownloadTestFile>b__0()
+        in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        43\n   at ContinuousTests.Tests.TwoClientTest.LogBytesPerMillisecond(Action
+        action) in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        82\n   at ContinuousTests.Tests.TwoClientTest.DownloadTestFile() in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        43\n   at InvokeStub_TwoClientTest.DownloadTestFile(Object, Object, IntPtr*)\n   at
+        System.Reflection.MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags
+        invokeAttr)\n   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj,
+        BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)\n   at
+        ContinuousTests.TestHandle.InvokeMoment(Int32 currentMoment, Action`1 beforeInvoke)
+        in /cs-codex-dist-tests/Tests/CodexContinuousTests/TestHandle.cs:line 47\n   at
+        ContinuousTests.SingleTestRun.RunMoment(Int32 t) in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        251\n   at ContinuousTests.SingleTestRun.RunTestMoments() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        150\n   at ContinuousTests.SingleTestRun.RunTest(Action`1 resultHandler) in
+        /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line 76\n   at
+        ContinuousTests.SingleTestRun.<>c__DisplayClass13_0.<Run>b__0() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        53\n   at Utils.TaskFactory.CatchException(Action action, String name) in
+        /cs-codex-dist-tests/Framework/Utils/TaskFactory.cs:line 20\n   at Utils.TaskFactory.<>c__DisplayClass2_0.<Run>b__0()
+        in /cs-codex-dist-tests/Framework/Utils/TaskFactory.cs:line 12\n   at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(Thread
+        threadPoolThread, ExecutionContext executionContext, ContextCallback callback,
+        Object state)\n   at System.Threading.Tasks.Task.ExecuteWithThreadLocal(Task&
+        currentTaskSlot, Thread threadPoolThread)\n   at System.Threading.ThreadPoolWorkQueue.Dispatch()\n   at
+        System.Threading.PortableThreadPool.WorkerThread.WorkerThreadStart()\n---
+        End of stack trace from previous location ---\n\n   --- End of inner exception
+        stack trace ---\n   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean
+        includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.Wait(Int32
+        millisecondsTimeout, CancellationToken cancellationToken)\n   at System.Threading.Tasks.Task.Wait()\n   at
+        Utils.Time.Wait[T](Task`1 task) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line
+        12\n   at Core.Http.<>c__DisplayClass15_0.<HttpGetStream>b__0() in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        125\n   at Utils.Time.Retry[T](Func`1 action, Int32 maxRetries, TimeSpan retryTime,
+        String description) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line 144<---\n\n
+        ---> (Inner Exception #3) System.AggregateException: One or more errors occurred.
+        (Connection refused (codex2-4-8-int.two-client-test-bugfix.svc.cluster.local:30007))\n
+        ---> System.Net.Http.HttpRequestException: Connection refused (codex2-4-8-int.two-client-test-bugfix.svc.cluster.local:30007)\n
+        ---> System.Net.Sockets.SocketException (111): Connection refused\n   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError
+        error, CancellationToken cancellationToken)\n   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16
+        token)\n   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|281_0(AwaitableSocketAsyncEventArgs
+        saea, ValueTask connectTask, CancellationToken cancellationToken)\n   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String
+        host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken
+        cancellationToken)\n   --- End of inner exception stack trace ---\n   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String
+        host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken
+        cancellationToken)\n   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage
+        request, Boolean async, CancellationToken cancellationToken)\n   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage
+        request, Boolean async, CancellationToken cancellationToken)\n   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem
+        queueItem)\n   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken
+        cancellationToken)\n   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionAsync(Boolean
+        async, CancellationToken requestCancellationToken)\n   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage
+        request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)\n   at
+        System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean
+        async, CancellationToken cancellationToken)\n   at System.Net.Http.HttpClient.GetStreamAsyncCore(HttpRequestMessage
+        request, CancellationToken cancellationToken)\n   --- End of inner exception
+        stack trace ---\n   at System.Threading.Tasks.Task.ThrowIfExceptional(Boolean
+        includeTaskCanceledExceptions)\n   at System.Threading.Tasks.Task.Wait(Int32
+        millisecondsTimeout, CancellationToken cancellationToken)\n   at System.Threading.Tasks.Task.Wait()\n   at
+        Utils.Time.Wait[T](Task`1 task) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line
+        12\n   at Core.Http.<>c__DisplayClass15_0.<HttpGetStream>b__0() in /cs-codex-dist-tests/Framework/Core/Http.cs:line
+        125\n   at Utils.Time.Retry[T](Func`1 action, Int32 maxRetries, TimeSpan retryTime,
+        String description) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line 144<---\n\n   ---
+        End of inner exception stack trace ---\n   at Utils.Time.Retry[T](Func`1 action,
+        Int32 maxRetries, TimeSpan retryTime, String description) in /cs-codex-dist-tests/Framework/Utils/Time.cs:line
+        139\n   at Core.Http.LockRetry[T](Func`1 operation, String description) in
+        /cs-codex-dist-tests/Framework/Core/Http.cs:line 212\n   at Core.Http.HttpGetStream(String
+        route) in /cs-codex-dist-tests/Framework/Core/Http.cs:line 120\n   at CodexPlugin.CodexAccess.DownloadFile(String
+        contentId) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexAccess.cs:line
+        71\n   at CodexPlugin.CodexNode.DownloadToFile(String contentId, TrackedFile
+        file) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line
+        200\n   at CodexPlugin.CodexNode.<>c__DisplayClass35_0.<DownloadContent>b__0()
+        in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line 128\n   at
+        Logging.Stopwatch.Measure(ILog log, String name, Action action, Boolean debug)
+        in /cs-codex-dist-tests/Framework/Logging/Stopwatch.cs:line 22\n   at CodexPlugin.CodexNode.DownloadContent(ContentId
+        contentId, String fileLabel) in /cs-codex-dist-tests/ProjectPlugins/CodexPlugin/CodexNode.cs:line
+        128\n   at ContinuousTests.Tests.TwoClientTest.<>c__DisplayClass11_0.<DownloadTestFile>b__0()
+        in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        43\n   at ContinuousTests.Tests.TwoClientTest.LogBytesPerMillisecond(Action
+        action) in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        82\n   at ContinuousTests.Tests.TwoClientTest.DownloadTestFile() in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        43\n   at InvokeStub_TwoClientTest.DownloadTestFile(Object, Object, IntPtr*)\n   at
+        System.Reflection.MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags
+        invokeAttr)\n   at ContinuousTests.SingleTestRun.ThrowFailTest() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        186\n   at ContinuousTests.SingleTestRun.RunTestMoments() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        155\n   at ContinuousTests.SingleTestRun.RunTest(Action`1 resultHandler) in
+        /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line 76","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Failed","testduration":"0","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T02:39:36.3628478Z","testtype":"continuous-tests"},"sort":[1707447057112]},{"_index":"continuous-tests-status-2024.02.09","_id":"bkxNi40BTe2pYqi1ySlQ","_score":null,"_ignored":["message.keyword"],"_source":{"@timestamp":"2024-02-09T00:38:55.2482106Z","avgdownload":"102.8KB/s","avgupload":"183.8KB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":" Files are not of equal length.","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex1-3-6c565dbd66-wxg49,bootstrap-2-75ffd985d5-sqhj5","involvedpods":"<CODEX13>,<BOOTSTRAP2>","message":"System.Exception:
+        System.Exception: Files are not of equal length.\n   at Utils.FrameworkAssert.Fail(String
+        message) in /cs-codex-dist-tests/Framework/Utils/FrameworkAssert.cs:line 12\n   at
+        Utils.FrameworkAssert.That(Boolean condition, String message) in /cs-codex-dist-tests/Framework/Utils/FrameworkAssert.cs:line
+        7\n   at FileUtils.TrackedFile.AssertEqual(TrackedFile actual) in /cs-codex-dist-tests/Framework/FileUtils/TrackedFile.cs:line
+        50\n   at FileUtils.TrackedFile.AssertIsEqual(TrackedFile actual) in /cs-codex-dist-tests/Framework/FileUtils/TrackedFile.cs:line
+        25\n   at ContinuousTests.Tests.TwoClientTest.DownloadTestFile() in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        45\n   at InvokeStub_TwoClientTest.DownloadTestFile(Object, Object, IntPtr*)\n   at
+        System.Reflection.MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags
+        invokeAttr)\n   at ContinuousTests.SingleTestRun.ThrowFailTest() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        186\n   at ContinuousTests.SingleTestRun.RunTestMoments() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        155\n   at ContinuousTests.SingleTestRun.RunTest(Action`1 resultHandler) in
+        /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line 76","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Failed","testduration":"0","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T00:21:16.3722732Z","testtype":"continuous-tests"},"sort":[1707439135248]}]}}'
+    headers:
+      Transfer-Encoding:
+      - chunked
+      X-elastic-product:
+      - Elasticsearch
+      content-type:
+      - application/vnd.elasticsearch+json;compatible-with=8
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      accept:
+      - application/vnd.elasticsearch+json; compatible-with=8
+      connection:
+      - keep-alive
+      user-agent:
+      - elasticsearch-py/8.10.1 (Python/3.11.5; elastic-transport/8.10.0)
+      x-elastic-client-meta:
+      - es=8.10.1,py=3.11.5,t=8.10.0,ur=2.0.7
+    method: GET
+    uri: http://localhost:9200/continuous-tests-status-2024.02.09/_doc/bkxNi40BTe2pYqi1ySlQ
+  response:
+    body:
+      string: '{"_index":"continuous-tests-status-2024.02.09","_id":"bkxNi40BTe2pYqi1ySlQ","_version":1,"_seq_no":11,"_primary_term":1,"found":true,"_source":{"@timestamp":"2024-02-09T00:38:55.2482106Z","avgdownload":"102.8KB/s","avgupload":"183.8KB/s","category":"none","codexcontractsid":"codexstorage/codex-contracts-eth:sha-b5f3399-dist-tests","codexid":"untagged
+        build","codexrevision":"a3c95be","error":" Files are not of equal length.","fixturename":"none","gethid":"codexstorage/dist-tests-geth:latest","involvedpodnames":"codex1-3-6c565dbd66-wxg49,bootstrap-2-75ffd985d5-sqhj5","involvedpods":"<CODEX13>,<BOOTSTRAP2>","message":"System.Exception:
+        System.Exception: Files are not of equal length.\n   at Utils.FrameworkAssert.Fail(String
+        message) in /cs-codex-dist-tests/Framework/Utils/FrameworkAssert.cs:line 12\n   at
+        Utils.FrameworkAssert.That(Boolean condition, String message) in /cs-codex-dist-tests/Framework/Utils/FrameworkAssert.cs:line
+        7\n   at FileUtils.TrackedFile.AssertEqual(TrackedFile actual) in /cs-codex-dist-tests/Framework/FileUtils/TrackedFile.cs:line
+        50\n   at FileUtils.TrackedFile.AssertIsEqual(TrackedFile actual) in /cs-codex-dist-tests/Framework/FileUtils/TrackedFile.cs:line
+        25\n   at ContinuousTests.Tests.TwoClientTest.DownloadTestFile() in /cs-codex-dist-tests/Tests/CodexContinuousTests/Tests/TwoClientTest.cs:line
+        45\n   at InvokeStub_TwoClientTest.DownloadTestFile(Object, Object, IntPtr*)\n   at
+        System.Reflection.MethodInvoker.Invoke(Object obj, IntPtr* args, BindingFlags
+        invokeAttr)\n   at ContinuousTests.SingleTestRun.ThrowFailTest() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        186\n   at ContinuousTests.SingleTestRun.RunTestMoments() in /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line
+        155\n   at ContinuousTests.SingleTestRun.RunTest(Action`1 resultHandler) in
+        /cs-codex-dist-tests/Tests/CodexContinuousTests/SingleTestRun.cs:line 76","prometheusid":"codexstorage/dist-tests-prometheus:latest","runid":"20240208-115030","status":"Failed","testduration":"0","testframeworkrevision":"fb00c6c","testid":"EnvVar-TESTID-NotSet","testname":"TwoClientTest","teststart":"2024-02-09T00:21:16.3722732Z","testtype":"continuous-tests"}}'
+    headers:
+      X-elastic-product:
+      - Elasticsearch
+      content-length:
+      - '2211'
+      content-type:
+      - application/vnd.elasticsearch+json;compatible-with=8
+    status:
+      code: 200
+      message: OK
+version: 1

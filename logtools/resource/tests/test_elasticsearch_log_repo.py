@@ -85,18 +85,20 @@ def test_should_respect_time_horizon_for_retrieving_resources():
 @pytest.mark.vcr
 def test_should_retrieve_test_runs_over_a_single_run_id():
     repo = ElasticSearchLogRepo()
-    runs = list(repo.test_runs('20240208-044040'))
+    runs = list(repo.test_runs('20240208-115030'))
 
-    assert len(runs) == 14
+    assert len(runs) == 34
 
 
 @pytest.mark.vcr
 def test_should_retrieve_failing_test_runs_over_a_single_run_id():
     repo = ElasticSearchLogRepo()
-    runs = list(repo.test_runs('20240208-044040', failed_only=True))
+    # FIXME: yes, this is a bad test. The data fixture is implicit in the recorded VCR cassette, which is neither
+    #   easy to inspect or modify.
+    runs = sorted(
+        list(repo.test_runs('20240208-115030', failed_only=True)),
+        key=lambda run: run.start)
 
-    assert len(runs) == 1
-    assert repo.test_run(runs[0].id).error.strip() == (
-        "data/zDvZRwzm5UemKDPMvadCu999HrqUnCJGzvKnsF7eiy2XV3TzoW7V/network' timed out after "
-        "3 tries over 10 mins, 1 secs."
-    )
+    assert len(runs) == 2
+    assert repo.test_run(runs[0].id).error.strip() == "Files are not of equal length."
+
