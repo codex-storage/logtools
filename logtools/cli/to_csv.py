@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 from csv import DictWriter
 from pathlib import Path
 
+from logtools import version_string
 from logtools.cli.utils import kv_pair
 from logtools.log.sources.input.file_log_source import FileLogSource
 from logtools.log.sources.parse.chronicles_raw_source import ChroniclesRawSource
@@ -37,6 +38,7 @@ def to_csv(args):
 
 def main():
     argparse = ArgumentParser()
+    parser.add_argument('--version', action='version', version=version_string)
     argparse.add_argument('--extract-fields', nargs='+', default=[],
                           help='Extract chronicles topics into CSV columns')
     argparse.add_argument('--constant-column', metavar='KEY=VALUE', nargs='+', type=kv_pair,

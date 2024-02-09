@@ -10,6 +10,7 @@ import pytz
 from colored import Fore, Style
 from dateutil import parser as tsparser
 
+from logtools import version_string
 from logtools.log.sources.input.file_log_source import FileLogSource
 from logtools.log.sources.parse.chronicles_raw_source import ChroniclesRawSource
 from logtools.log.sources.transform.filtered_source import FilteredSource, timestamp_range
@@ -80,6 +81,7 @@ def _ensure_utc(ts: datetime) -> datetime:
 def main():
     parser = argparse.ArgumentParser(
         description='Merges Chronicles logs chronologically and outputs colored, interleaved content.')
+    parser.add_argument('--version', action='version', version=version_string)
 
     parser.add_argument("files", nargs="+", help='Log files to merge.', type=Path)
     parser.add_argument('--aliases', nargs="*",

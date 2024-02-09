@@ -17,6 +17,7 @@ from rich.table import Table
 from logtools.cli.palettes import ColorMap
 from logtools.log.sources.input.elastic_search_source import ElasticSearchSource
 from logtools.resource.elastic_search_log_repo import ElasticSearchLogRepo
+from logtools import version_string
 
 
 class ResourceType(Enum):
@@ -38,6 +39,7 @@ RESOURCE_DESCRIBERS = {
 
 def main():
     parser = ArgumentParser()
+    parser.add_argument('--version', action='version', version=version_string)
     parser.add_argument(
         '--es-host',
         help='ElasticSearch URL (defaults to http://localhost:9200)',
